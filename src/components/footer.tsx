@@ -14,10 +14,6 @@ const Footer = () => {
           <p className="font-bold text-lg">Hyrexverse</p>
           <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} All Rights Reserved.</p>
         </div>
-        <div className="flex items-center space-x-6">
-           <a href="#" className="text-sm hover:text-primary transition-colors">Instagram</a>
-           <a href="#" className="text-sm hover:text-primary transition-colors">YouTube</a>
-        </div>
         <div className="hidden md:block">
             <Button variant="ghost" size="icon" onClick={scrollToTop} aria-label="Scroll to top">
                 <ArrowUp />
