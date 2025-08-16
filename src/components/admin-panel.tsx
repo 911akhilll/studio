@@ -8,6 +8,11 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
+// Helper to check for a valid URL format
+const isPotentialUrl = (str: string) => {
+    return str.startsWith('http://') || str.startsWith('https://') || str.startsWith('blob:');
+}
+
 const AdminPanel = () => {
     const { siteData, updateSiteData, isAdminPanelOpen, setAdminPanelOpen, isUploading } = useSiteDataContext();
     const [formData, setFormData] = useState(siteData);
@@ -83,7 +88,7 @@ const AdminPanel = () => {
                         <label className="text-sm font-medium">Profile Image</label>
                         <div className="mt-2 flex items-center gap-4">
                             <div className="relative w-20 h-20">
-                                {previewImage && (
+                                {previewImage && isPotentialUrl(previewImage) && (
                                     <Image src={previewImage} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
                                 )}
                                 {(isUploading || isSaving) && (
