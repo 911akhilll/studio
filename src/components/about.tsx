@@ -2,6 +2,7 @@
 import React from 'react';
 import { useSiteDataContext } from '@/contexts/site-data-context';
 import { Skeleton } from './ui/skeleton';
+import Image from 'next/image';
 
 const About = () => {
   const { siteData, loading } = useSiteDataContext();
@@ -28,13 +29,13 @@ const About = () => {
                   <Skeleton className="w-[450px] h-[300px] rounded-lg" />
                 ) : (
                   siteData.profileImage && (
-                    <img 
+                    <Image 
                         src={siteData.profileImage}
                         alt="Domi boy anime"
                         data-ai-hint="anime boy"
                         width={450}
                         height={300}
-                        className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)]"
+                        className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] object-cover"
                     />
                   )
                 )}

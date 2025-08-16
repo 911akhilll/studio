@@ -1,7 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '@/lib/firebase';
 import type { SiteData } from '@/contexts/site-data-context';
 
 const initialData: SiteData = {
@@ -21,20 +22,30 @@ export const useSiteData = () => {
       if (docSnap.exists()) {
         setSiteData(docSnap.data() as SiteData);
       } else {
-        // If the document doesn't exist, create it with initial data
         setDoc(docRef, initialData);
         setSiteData(initialData);
       }
       setLoading(false);
+    }, (error) => {
+        console.error("Error fetching site data:", error);
+        setLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = async (newData: Partial<SiteData>) => {
+  const updateSiteData = async (newData: Partial<SiteData>, imageFile?: File | null) => {
     const docRef = doc(db, 'site', 'settings');
-    await setDoc(docRef, newData, { merge: true });
+    let updatedData = { ...newData };
+
+    if (imageFile) {
+        const storageRef = ref(storage, `profileImages/${imageFile.name}`);
+        await uploadBytes(storageRef, imageFile);
+        const downloadURL = await getDownloadURL(storageRef);
+        updatedData.profileImage = downloadURL;
+    }
+    
+    await setDoc(docRef, updatedData, { merge: true });
   };
 
   return { siteData, loading, updateSiteData };

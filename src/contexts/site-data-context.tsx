@@ -13,7 +13,7 @@ export interface SiteData {
 interface SiteDataContextType {
   siteData: SiteData;
   loading: boolean;
-  updateSiteData: (newData: Partial<SiteData>) => Promise<void>;
+  updateSiteData: (newData: Partial<SiteData>, imageFile?: File | null) => Promise<void>;
   isAdminPanelOpen: boolean;
   setAdminPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
