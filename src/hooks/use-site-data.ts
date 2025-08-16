@@ -10,7 +10,7 @@ const initialData: SiteData = {
     heroTitle: 'Hyrexverse',
     heroSubtitle: "I'm a YouTube content creator. Join me now!",
     aboutText: "I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!",
-    profileImage: 'https://i.ibb.co/68S5gH3/image.png',
+    profileImage: 'https://placehold.co/400x400.png',
 };
 
 export const useSiteData = () => {
@@ -44,16 +44,15 @@ export const useSiteData = () => {
   const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage'>> & { profileImage?: string }, imageFile?: File | null) => {
     const docRef = doc(db, 'site', 'settings');
     
-    // Create a temporary object to hold all updates, starting with text fields
-    const dataToUpdate: Partial<Omit<SiteData, 'profileImage'>> = { 
-        heroTitle: newData.heroTitle,
-        heroSubtitle: newData.heroSubtitle,
-        aboutText: newData.aboutText,
-    };
+    const dataToUpdate: Partial<SiteData> = { ...newData };
+    delete dataToUpdate.profileImage;
+
 
     // First, save the text content immediately for a responsive feel
-    await setDoc(docRef, dataToUpdate, { merge: true });
-
+    if (Object.keys(dataToUpdate).length > 0) {
+        await setDoc(docRef, dataToUpdate, { merge: true });
+    }
+    
     // Handle image file upload if one is provided
     if (imageFile) {
         setIsUploading(true);
