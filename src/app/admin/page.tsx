@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useSiteDataContext, SiteData, SiteDataProvider } from '@/contexts/site-data-context';
@@ -306,3 +307,5 @@ export default function AdminPage() {
         </SiteDataProvider>
     )
 }
+
+    
