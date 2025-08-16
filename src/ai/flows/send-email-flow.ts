@@ -7,12 +7,9 @@
  */
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { Resend } from 'resend';
 
-// IMPORTANT: This key should be stored in a secure way, like environment variables.
-// For this example, it's hardcoded, but in a real application,
-// use process.env.RESEND_API_KEY
-const resend = new Resend('re_123456789');
+// This flow is no longer in use and can be safely removed or ignored.
+// The contact form was simplified to use a mailto: link to avoid paid services.
 
 const SendEmailSchema = z.object({
   to: z.string().email().describe('The email address to send the message to.'),
@@ -34,29 +31,11 @@ const sendEmailFlow = ai.defineFlow(
     outputSchema: z.void(),
   },
   async (input) => {
-    // In a real application, you would integrate with an email service like Resend, SendGrid, etc.
-    // The following code is a placeholder to demonstrate the flow.
-    // You will need to install the 'resend' package and configure it with your API key.
-    console.log(`Sending email to ${input.to}`);
-    console.log(`From: ${input.fromName} <${input.fromEmail}>`);
-    console.log(`Message: ${input.message}`);
-
-    // Example using Resend (uncomment and configure to use)
-    /*
-    try {
-      await resend.emails.send({
-        from: 'onboarding@resend.dev', // This should be a domain you've verified with Resend
-        to: input.to,
-        subject: `New message from ${input.fromName} via your portfolio`,
-        html: `<p>You have a new message from <strong>${input.fromName}</strong> (${input.fromEmail}):</p><p>${input.message}</p>`,
-      });
-    } catch (error) {
-        console.error("Failed to send email", error);
-        throw new Error("Email sending failed.");
-    }
-    */
+    console.log('Email functionality has been disabled to ensure all features are free.');
+    console.log(`Email would have been sent to ${input.to}`);
+    // The original Resend logic has been removed.
     
-    // Simulate a network delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Simulate a short delay
+    await new Promise(resolve => setTimeout(resolve, 500));
   }
 );
