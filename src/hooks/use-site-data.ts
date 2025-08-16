@@ -53,8 +53,10 @@ export const useSiteData = () => {
             contactEmail: initialData.contactEmail
         }).catch(err => console.error("Error creating initial settings:", err));
       }
+      setLoading(false);
     }, (error) => {
       console.error("Error fetching site settings:", error);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -100,21 +102,6 @@ export const useSiteData = () => {
 
     return () => unsubscribe();
   }, []);
-
-  // Combined effect to manage loading state
-  useEffect(() => {
-    const checkDataLoaded = () => {
-      // Set loading to false once we have some data.
-      // This is a simplification; a more robust solution might wait for all listeners.
-      if (siteData.heroTitle !== initialData.heroTitle) {
-          setLoading(false);
-      }
-    }
-    // Give listeners time to fire
-    const timer = setTimeout(checkDataLoaded, 1500); 
-    return () => clearTimeout(timer);
-  }, [siteData.heroTitle]);
-
 
   const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => {
     const docRef = doc(db, 'site', 'settings');
