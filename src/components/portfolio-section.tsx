@@ -33,7 +33,7 @@ const projects = [
 
 const PortfolioSection = () => {
   return (
-    <Section id="portfolio">
+    <Section id="portfolio" className="bg-secondary/50">
       <div className="flex flex-col items-center text-center">
         <h2 className="font-headline text-4xl font-bold tracking-tight">My Work</h2>
         <p className="mt-2 max-w-2xl text-muted-foreground">
@@ -43,19 +43,19 @@ const PortfolioSection = () => {
 
       <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
         {projects.map((project, i) => (
-          <Card key={i} className="group overflow-hidden bg-card/50 backdrop-blur-sm">
-             <CardHeader>
-                <div className="relative h-60 w-full overflow-hidden rounded-lg">
+          <Card key={i} className="group overflow-hidden">
+             <CardHeader className="p-0">
+                <div className="relative h-60 w-full overflow-hidden">
                     <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     data-ai-hint={project.hint}
                     />
                 </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <CardTitle className="font-headline text-2xl">{project.title}</CardTitle>
               <CardDescription className="mt-2">{project.description}</CardDescription>
             </CardContent>

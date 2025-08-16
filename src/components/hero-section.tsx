@@ -19,11 +19,11 @@ const HeroSection = ({ loading, tagline }: HeroSectionProps) => {
             width={200}
             height={200}
             priority
-            className="rounded-full border-4 border-primary/50 object-cover shadow-glow"
+            className="rounded-full border-4 border-primary/10 object-cover shadow-lg"
             data-ai-hint="profile picture"
           />
         </div>
-        <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-10 duration-700 ease-out">
+        <div className="flex flex-col gap-2">
           <h1 className="font-headline text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl">
             Priyatam Behera
           </h1>
@@ -31,7 +31,7 @@ const HeroSection = ({ loading, tagline }: HeroSectionProps) => {
             {loading ? (
               <Skeleton className="h-full w-full" />
             ) : (
-              <p className="font-headline text-xl text-accent md:text-2xl">
+              <p className="font-headline text-xl text-primary md:text-2xl">
                 {tagline}
               </p>
             )}

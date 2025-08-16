@@ -14,10 +14,10 @@ interface ServicesSectionProps {
 }
 
 const icons: Record<Persona, ReactNode> = {
-  Developer: <CodeXml className="h-8 w-8 text-accent" />,
-  Designer: <Paintbrush className="h-8 w-8 text-accent" />,
-  Influencer: <Megaphone className="h-8 w-8 text-accent" />,
-  YouTuber: <Youtube className="h-8 w-8 text-accent" />,
+  Developer: <CodeXml className="h-8 w-8 text-primary" />,
+  Designer: <Paintbrush className="h-8 w-8 text-primary" />,
+  Influencer: <Megaphone className="h-8 w-8 text-primary" />,
+  YouTuber: <Youtube className="h-8 w-8 text-primary" />,
 };
 
 const ServicesSection = ({ loading, services, persona }: ServicesSectionProps) => {
@@ -41,7 +41,7 @@ const ServicesSection = ({ loading, services, persona }: ServicesSectionProps) =
           : services?.map((service, i) => (
               <Card
                 key={i}
-                className="group flex h-48 flex-col items-center justify-center bg-card/50 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-primary/20"
+                className="group flex h-48 flex-col items-center justify-center bg-card p-6 text-center transition-all duration-300 hover:scale-105 hover:bg-accent"
               >
                 <CardHeader className="items-center">
                   {icons[persona]}

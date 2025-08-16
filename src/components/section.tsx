@@ -9,7 +9,7 @@ const Section = React.forwardRef<
     <section
       ref={ref}
       className={cn(
-        "container mx-auto max-w-5xl px-4 py-16 md:py-24 animate-in fade-in slide-in-from-bottom-10 duration-700 ease-out",
+        "container mx-auto max-w-5xl px-4 py-16 md:py-24",
         className
       )}
       {...props}

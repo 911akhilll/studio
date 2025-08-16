@@ -17,9 +17,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['"Space Grotesk"', 'sans-serif'],
-        code: ['monospace'],
+        body: ['"Geist Sans"', 'sans-serif'],
+        headline: ['"Geist Mono"', 'monospace'],
+        code: ['"Geist Mono"', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -100,8 +100,8 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
-      textShadow: {
-        glow: '0 0 8px hsl(var(--primary)), 0 0 20px hsl(var(--accent))',
+      boxShadow: {
+        glow: '0 0 8px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--accent) / 0.5)',
       },
     },
   },

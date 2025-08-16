@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
+    const { toast } = useToast();
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -16,7 +18,10 @@ const ContactSection = () => {
             email: formData.get('email'),
             message: formData.get('message'),
         });
-        alert("Message sent! (Check the console)");
+        toast({
+            title: "Message Sent!",
+            description: "Thanks for reaching out. I'll get back to you soon.",
+        });
         e.currentTarget.reset();
     };
 
@@ -29,15 +34,17 @@ const ContactSection = () => {
         </p>
       </div>
 
-      <div className="mt-12 grid gap-12 md:grid-cols-2">
-        <div className="flex flex-col gap-8">
-            <Card className="bg-card/50 p-6 text-left backdrop-blur-sm">
+      <div className="mt-12 grid gap-8 md:grid-cols-2">
+        <div className="flex flex-col justify-center gap-8">
+            <Card className="p-6 text-left">
                 <CardContent className="p-0">
                     <div className="flex items-center gap-4">
-                        <Mail className="h-8 w-8 text-accent" />
+                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-secondary">
+                            <Mail className="h-6 w-6 text-secondary-foreground" />
+                        </div>
                         <div>
                             <h3 className="text-lg font-semibold">Email</h3>
-                            <a href="mailto:911priyatambehera@gmail.com" className="text-muted-foreground hover:text-accent">
+                            <a href="mailto:911priyatambehera@gmail.com" className="text-muted-foreground hover:text-primary">
                                 911priyatambehera@gmail.com
                             </a>
                         </div>
@@ -46,14 +53,18 @@ const ContactSection = () => {
             </Card>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input name="name" type="text" placeholder="Your Name" required className="bg-input/50"/>
-          <Input name="email" type="email" placeholder="Your Email" required className="bg-input/50"/>
-          <Textarea name="message" placeholder="Your Message" required className="min-h-[150px] bg-input/50"/>
-          <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-            Send Message
-          </Button>
-        </form>
+        <Card>
+            <CardContent className="p-6">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input name="name" type="text" placeholder="Your Name" required />
+                    <Input name="email" type="email" placeholder="Your Email" required />
+                    <Textarea name="message" placeholder="Your Message" required className="min-h-[150px]"/>
+                    <Button type="submit" size="lg" className="w-full">
+                        Send Message
+                    </Button>
+                </form>
+            </CardContent>
+        </Card>
       </div>
     </Section>
   );

@@ -17,7 +17,7 @@ const PersonaSelector = ({ selectedPersona, onPersonaChange }: PersonaSelectorPr
       onValueChange={(value) => onPersonaChange(value as Persona)}
       className="w-full max-w-md"
     >
-      <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-background/50 backdrop-blur-md border border-primary/20 h-auto">
+      <TabsList className="grid w-full grid-cols-2 bg-background/80 backdrop-blur-md md:grid-cols-4 h-auto shadow-md">
         {personas.map((persona) => (
           <TabsTrigger key={persona} value={persona} className="text-xs sm:text-sm">
             {persona}
