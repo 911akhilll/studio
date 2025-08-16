@@ -1,10 +1,11 @@
 'use client';
 import React from 'react';
-import { useAdmin } from '@/context/admin-context';
 import SocialButtons from './social-buttons';
 
 const Hero = () => {
-  const { heroTitle, heroSubtitle } = useAdmin();
+  const heroTitle = 'Hyrexverse';
+  const heroSubtitle = "I'm a YouTube content creator. Join me now!";
+
   return (
     <section id="hero" className="relative bg-primary text-primary-foreground py-24 sm:py-32 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">

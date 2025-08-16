@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import { useAdmin } from '@/context/admin-context';
 
 const About = () => {
-  const { aboutText, profileImage } = useAdmin();
+  const aboutText = "I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!";
+  const profileImage = 'https://placehold.co/450x300.png';
 
   return (
     <section id="about" className="py-24 sm:py-32">

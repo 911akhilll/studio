@@ -7,23 +7,11 @@ import Services from '@/components/services';
 import Portfolio from '@/components/portfolio';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
-import { AdminProvider, useAdmin } from '@/context/admin-context';
-import AdminPanel from '@/components/admin-panel';
 
 const PageContent = () => {
-  const { useAnimation } = useAdmin();
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
-    if (!useAnimation) {
-      sectionsRef.current.forEach(section => {
-        if (section) {
-          section.classList.remove('fade-in-section', 'is-visible');
-        }
-      });
-      return;
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -51,7 +39,7 @@ const PageContent = () => {
         }
       });
     };
-  }, [useAnimation]);
+  }, []);
 
   return (
     <div className="bg-secondary min-h-screen text-black overflow-x-hidden">
@@ -70,15 +58,10 @@ const PageContent = () => {
         <Contact />
       </main>
       <Footer />
-      <AdminPanel />
     </div>
   );
 };
 
 export default function Home() {
-  return (
-    <AdminProvider>
-      <PageContent />
-    </AdminProvider>
-  );
+  return <PageContent />;
 }
