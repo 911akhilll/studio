@@ -50,7 +50,7 @@ const YouTubeVideos = () => {
                                                         data-ai-hint="youtube thumbnail"
                                                     />
                                                     <div className="p-4">
-                                                        <h3 className="font-bold text-lg tracking-tight">{video.title}</h3>
+                                                        <h3 className="font-bold text-lg tracking-tight text-black">{video.title}</h3>
                                                     </div>
                                                 </CardContent>
                                             </a>
