@@ -52,7 +52,7 @@ const InfoCard = ({ icon, title, text, linkText, href, delay = 0 }: { icon: Reac
         <CardContent>
           <p className="text-muted-foreground">{text}</p>
           {linkText && href && (
-            <a href={href} className="text-accent hover:underline mt-4 inline-block font-semibold">
+            <a href={href} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline mt-4 inline-block font-semibold">
               {linkText}
             </a>
           )}
@@ -86,7 +86,7 @@ const Info = () => {
       title: "Telegram",
       text: "Join the community for updates and discussions.",
       linkText: "Join Channel",
-      href: "#",
+      href: "https://t.me/Hyrexverse",
       delay: 0.2
     },
     {
