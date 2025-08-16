@@ -17,6 +17,7 @@ interface SiteDataContextType {
   siteData: SiteData;
   loading: boolean;
   updateSiteData: (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => Promise<void>;
+  uploadProfileImage: (file: File) => Promise<void>;
   addReview: (newReview: Omit<Review, 'id'>) => Promise<void>;
   deleteReview: (reviewId: string) => Promise<void>;
   addVideo: (newVideo: Omit<YouTubeVideo, 'id'>) => Promise<void>;

@@ -2,7 +2,8 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { doc, onSnapshot, setDoc, collection, addDoc, query, orderBy, deleteDoc, Timestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage } from '@/lib/firebase';
 import type { SiteData } from '@/contexts/site-data-context';
 
 export interface Review {
@@ -22,7 +23,7 @@ const initialSettings = {
     heroTitle: 'Hyrexverse',
     heroSubtitle: "I'm a YouTube content creator. Join me now!",
     aboutText: "I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!",
-    profileImage: 'https://i.ibb.co/r29pk6ph/profileimg.png',
+    profileImage: 'https://placehold.co/160x160.png',
     contactEmail: '911priyatambehera@gmail.com',
 };
 
@@ -48,6 +49,7 @@ export const useSiteData = () => {
           profileImage: data.profileImage || initialSettings.profileImage,
         });
       } else {
+        // If the document doesn't exist, create it with initial settings.
         setDoc(docRef, initialSettings).catch(err => console.error("Error creating initial settings:", err));
       }
       setLoading(false);
@@ -87,7 +89,7 @@ export const useSiteData = () => {
   // Effect for videos sub-collection
   useEffect(() => {
     const videosRef = collection(db, 'site', 'settings', 'videos');
-    const q = query(videosRef, orderBy('title', 'asc'));
+    const q = query(videosRef);
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const fetchedVideos = querySnapshot.docs.map(doc => ({
@@ -103,7 +105,7 @@ export const useSiteData = () => {
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = useCallback(async (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => {
+  const updateSiteData = useCallback(async (newData: Partial<SiteSettings>) => {
     const docRef = doc(db, 'site', 'settings');
     try {
       await setDoc(docRef, newData, { merge: true });
@@ -112,6 +114,17 @@ export const useSiteData = () => {
     }
   }, []);
   
+  const uploadProfileImage = useCallback(async (file: File) => {
+    const storageRef = ref(storage, `profileImages/profile-image`);
+    try {
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        await updateSiteData({ profileImage: downloadURL });
+    } catch (error) {
+        console.error("Error uploading image: ", error);
+    }
+  }, [updateSiteData]);
+
   const addReview = useCallback(async (newReview: Omit<Review, 'id'>) => {
     try {
       await addDoc(collection(db, 'site', 'settings', 'reviews'), newReview);
@@ -150,5 +163,5 @@ export const useSiteData = () => {
       videos,
   }
 
-  return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo };
+  return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, uploadProfileImage };
 };

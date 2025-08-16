@@ -1,16 +1,16 @@
 
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSiteDataContext, SiteData, SiteDataProvider } from '@/contexts/site-data-context';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Loader2, Star, Home, Trash2, Youtube, MessageSquare } from 'lucide-react';
+import { Loader2, Star, Home, Trash2, Youtube, MessageSquare, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 
 const AdminPageComponent = () => {
-    const { siteData, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, loading } = useSiteDataContext();
+    const { siteData, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, uploadProfileImage, loading } = useSiteDataContext();
     const [formData, setFormData] = useState<SiteData>(siteData);
     const [isSaving, setIsSaving] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,6 +25,9 @@ const AdminPageComponent = () => {
     const [videoUrl, setVideoUrl] = useState('');
     const [isAddingVideo, setIsAddingVideo] = useState(false);
     
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isUploading, setIsUploading] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const AdminPageComponent = () => {
 
     const handleSaveChanges = async () => {
         setIsSaving(true);
-        const { reviews, profileImage, ...dataToUpdate } = formData;
+        const { reviews, videos, ...dataToUpdate } = formData;
         await updateSiteData(dataToUpdate);
         setIsSaving(false);
     };
@@ -92,6 +95,15 @@ const AdminPageComponent = () => {
         }
     };
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setIsUploading(true);
+            await uploadProfileImage(file);
+            setIsUploading(false);
+        }
+    };
+
     if (!isAuthenticated) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-4">
@@ -133,7 +145,6 @@ const AdminPageComponent = () => {
                     </Button>
                 </div>
                 
-                {/* Site Overview */}
                 <Card className="mb-8 bg-card border-border">
                     <CardHeader>
                         <CardTitle>Site Overview</CardTitle>
@@ -157,12 +168,29 @@ const AdminPageComponent = () => {
                 </Card>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* General Settings */}
                     <Card className="bg-card border-border">
                         <CardHeader>
                             <CardTitle>General Settings</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
+                            <div className="flex items-center gap-4">
+                                <img src={siteData.profileImage} alt="Profile" className="w-20 h-20 rounded-full object-cover border-2 border-primary"/>
+                                <div className="flex-grow">
+                                    <label className="text-sm font-medium text-muted-foreground">Profile Picture</label>
+                                    <Input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        onChange={handleImageUpload}
+                                        className="hidden"
+                                    />
+                                    <Button onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="w-full mt-2 bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                                        {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
+                                        Upload New Image
+                                    </Button>
+                                </div>
+                            </div>
+
                             <div>
                                 <label htmlFor="heroTitle" className="text-sm font-medium text-muted-foreground">Hero Title</label>
                                 <Input id="heroTitle" name="heroTitle" value={formData.heroTitle} onChange={handleInputChange} className="bg-input text-foreground" />
@@ -187,7 +215,6 @@ const AdminPageComponent = () => {
                     </Card>
 
                     <div className="space-y-8">
-                      {/* Review Management */}
                       <Card className="bg-card border-border">
                           <CardHeader>
                               <CardTitle>Add a New Review</CardTitle>
@@ -223,7 +250,6 @@ const AdminPageComponent = () => {
                           </CardContent>
                       </Card>
 
-                      {/* YouTube Video Management */}
                       <Card className="bg-card border-border">
                           <CardHeader>
                               <CardTitle>Add a YouTube Video</CardTitle>
@@ -246,7 +272,6 @@ const AdminPageComponent = () => {
                     </div>
                 </div>
 
-                {/* Reviews List */}
                 <Card className="mt-8 bg-card border-border">
                     <CardHeader>
                         <CardTitle>Reviews List</CardTitle>
@@ -274,7 +299,6 @@ const AdminPageComponent = () => {
                     </CardContent>
                 </Card>
 
-                {/* Videos List */}
                 <Card className="mt-8 bg-card border-border">
                     <CardHeader>
                         <CardTitle>Videos List</CardTitle>
@@ -299,7 +323,6 @@ const AdminPageComponent = () => {
     );
 };
 
-
 export default function AdminPage() {
     return (
         <SiteDataProvider>
@@ -307,5 +330,3 @@ export default function AdminPage() {
         </SiteDataProvider>
     )
 }
-
-    
