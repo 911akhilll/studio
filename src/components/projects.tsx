@@ -10,66 +10,48 @@ const projects = [
     image: 'https://placehold.co/400x300.png',
     hint: 'art exhibition'
   },
+  {
+    title: 'BRANDING',
+    description: 'A new identity for a groundbreaking tech startup.',
+    image: 'https://placehold.co/400x300.png',
+    hint: 'modern branding'
+  },
 ];
 
 const Projects = () => {
   return (
-    <section id="projects" className="relative min-h-screen flex items-center bg-background text-foreground py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+    <section id="projects" className="relative bg-background text-foreground py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="md:col-span-5 lg:col-span-4 self-end animate-on-scroll">
+        <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-8xl md:text-9xl font-bold font-display leading-none tracking-tighter">Projects</h2>
+            <p className="text-muted-foreground mt-2">A selection of our finest work</p>
         </div>
         
-        <div className="md:col-span-7 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div id="project-card-1" className='animate-on-scroll' style={{ animationDelay: '200ms' }}>
-                {projects.map((project, index) => (
-                    <div key={index} className="bg-card border border-border p-6 rounded-lg relative group overflow-hidden">
-                        <Image src={project.image} alt={project.title} width={400} height={300} className="rounded-md w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 grayscale" data-ai-hint={project.hint} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {projects.map((project, index) => (
+                <div id={`project-card-${index + 1}`} key={index} className='animate-on-scroll group' style={{ animationDelay: `${200 * index}ms` }}>
+                    <div className="bg-card border border-border p-6 rounded-lg relative overflow-hidden">
+                        <Image src={project.image} alt={project.title} width={400} height={300} className="rounded-md w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={project.hint} />
                         <div className="mt-4">
-                            <h3 className="font-bold text-xl">{project.title}</h3>
-                            <div className="flex space-x-1 mt-2">
-                                <span className="w-6 h-1 bg-primary rounded-full"></span>
-                                <span className="w-2 h-1 bg-border rounded-full"></span>
-                                <span className="w-2 h-1 bg-border rounded-full"></span>
-                            </div>
+                            <h3 className="font-bold text-2xl text-primary">{project.title}</h3>
+                            <p className="text-muted-foreground mt-2">{project.description}</p>
                         </div>
-                        <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                            <Button variant="default" size="icon" className='bg-foreground text-background hover:bg-foreground/80 rounded-full w-12 h-12'>
+                        <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-primary rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-[1.2]">
+                            <Button variant="default" size="icon" className='bg-foreground text-background hover:bg-foreground/80 rounded-full w-16 h-16 absolute top-1/2 left-1/2 -translate-x-[75%] -translate-y-[75%]'>
                                 <ArrowRight />
                             </Button>
                         </div>
                     </div>
-                ))}
-            </div>
-
-            <div className='relative h-96 w-full md:h-[60vh] animate-on-scroll group' style={{ animationDelay: '400ms' }}>
-                <Image
-                    src="https://placehold.co/400x600.png"
-                    alt="Black gloved hand"
-                    fill
-                    className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105 grayscale"
-                    data-ai-hint="gloved hand"
-                />
-            </div>
+                </div>
+            ))}
         </div>
 
         <div id="scroll-down-button" className="absolute right-8 bottom-8 md:right-16 md:bottom-16 flex flex-col items-center space-y-4 animate-on-scroll">
-            <Button variant="outline" size="icon" className="rounded-full border-2 h-14 w-14 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors">
+            <Button variant="outline" size="icon" className="rounded-full border-2 h-16 w-16 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors text-primary border-primary">
                 <ArrowDown />
             </Button>
         </div>
-
-        <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden md:block animate-on-scroll">
-            <div className='flex items-center space-x-4 transform -rotate-90'>
-                <span className='text-xs font-bold whitespace-nowrap'>- 01</span>
-            </div>
-        </div>
-
-         <div className="absolute left-8 bottom-8 md:left-16 md:bottom-16 text-xs text-muted-foreground hidden md:block animate-on-scroll">
-             <p>911AKHIL NEWS</p>
-             <p>LATEST COLLECTIONS</p>
-         </div>
       </div>
     </section>
   );

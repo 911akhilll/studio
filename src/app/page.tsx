@@ -16,7 +16,7 @@ export default function Home() {
         }
       });
     }, {
-      threshold: 0.2,
+      threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     });
 
@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-background min-h-screen text-foreground">
+    <div className="bg-background min-h-screen text-foreground overflow-x-hidden">
       <ScrollingStar />
       <Header />
       <main>
