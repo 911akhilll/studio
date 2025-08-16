@@ -16,13 +16,13 @@
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 24 95% 53%; /* Bright Orange */
+    --accent: 195 100% 50%; /* Sky Blue */
     --accent-foreground: 0 0% 10%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 24 95% 53%; /* Bright Orange */
+    --ring: 195 100% 50%; /* Sky Blue */
     --radius: 0.5rem;
   }
  
@@ -39,13 +39,13 @@
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 24 95% 53%;
+    --accent: 195 100% 50%;
     --accent-foreground: 0 0% 10%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 24 95% 53%;
+    --ring: 195 100% 50%;
   }
 }
 
@@ -98,5 +98,18 @@
 
   .animate-pulse-text {
     animation: pulse-text 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes float-3d {
+    0%, 100% {
+      transform: translateY(0) rotateX(10deg) rotateY(-10deg);
+    }
+    50% {
+      transform: translateY(-15px) rotateX(10deg) rotateY(-10deg);
+    }
+  }
+
+  .animate-float-3d {
+    animation: float-3d 6s ease-in-out infinite;
   }
 }

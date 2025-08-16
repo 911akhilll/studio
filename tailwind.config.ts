@@ -77,11 +77,20 @@ export default {
             height: '0',
           },
         },
+        'float-3d': {
+          '0%, 100%': {
+            transform: 'translateY(0) rotateX(10deg) rotateY(-10deg)',
+          },
+          '50%': {
+            transform: 'translateY(-15px) rotateX(10deg) rotateY(-10deg)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'spin-slow': 'spin 15s linear infinite',
+        'float-3d': 'float-3d 6s ease-in-out infinite',
       },
     },
   },

@@ -8,7 +8,7 @@ const Info = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 [perspective:1000px]">
           
-          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl transition-all duration-500 ease-out hover:scale-105 hover:[transform:rotateX(10deg)_rotateY(-10deg)]">
+          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl animate-float-3d" style={{ animationDelay: '0s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-bold">
                 <Youtube className="text-primary w-8 h-8" />
@@ -23,7 +23,7 @@ const Info = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl transition-all duration-500 ease-out hover:scale-105 hover:[transform:rotateX(10deg)_rotateY(0deg)]">
+          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl animate-float-3d" style={{ animationDelay: '0.5s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-bold">
                 <Instagram className="text-primary w-8 h-8" />
@@ -38,7 +38,7 @@ const Info = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl transition-all duration-500 ease-out hover:scale-105 hover:[transform:rotateX(10deg)_rotateY(10deg)]">
+          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl animate-float-3d" style={{ animationDelay: '1s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-bold">
                 <Send className="text-primary w-8 h-8" />
@@ -53,7 +53,7 @@ const Info = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl transition-all duration-500 ease-out hover:scale-105 hover:[transform:rotateX(10deg)_rotateY(10deg)]">
+          <Card className="bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl animate-float-3d" style={{ animationDelay: '1.5s' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-bold">
                 <InfoIcon className="text-primary w-8 h-8" />
