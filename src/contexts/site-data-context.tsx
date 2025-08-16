@@ -14,7 +14,7 @@ interface SiteDataContextType {
   siteData: SiteData;
   loading: boolean;
   isUploading: boolean;
-  updateSiteData: (newData: Partial<Omit<SiteData, 'profileImage'>>, imageFile?: File | null) => Promise<void>;
+  updateSiteData: (newData: Partial<Omit<SiteData, 'profileImage'>>) => Promise<void>;
   isAdminPanelOpen: boolean;
   setAdminPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
