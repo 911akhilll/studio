@@ -1,7 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import imageCompression from 'browser-image-compression';
 import { db, storage } from '@/lib/firebase';
 import type { SiteData } from '@/contexts/site-data-context';
 
@@ -23,7 +24,6 @@ export const useSiteData = () => {
       if (docSnap.exists()) {
         setSiteData(docSnap.data() as SiteData);
       } else {
-        // Use setDoc to create the document if it doesn't exist.
         setDoc(docRef, initialData);
         setSiteData(initialData);
       }
@@ -40,13 +40,23 @@ export const useSiteData = () => {
     const docRef = doc(db, 'site', 'settings');
     
     // Immediately update text data
-    await setDoc(docRef, newData, { merge: true });
+    if (Object.keys(newData).length > 0) {
+      await setDoc(docRef, newData, { merge: true });
+    }
 
     if (imageFile) {
         setIsUploading(true);
-        const storageRef = ref(storage, `profileImages/${imageFile.name}`);
+        
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        }
+
         try {
-            await uploadBytes(storageRef, imageFile);
+            const compressedFile = await imageCompression(imageFile, options);
+            const storageRef = ref(storage, `profileImages/${compressedFile.name}`);
+            await uploadBytes(storageRef, compressedFile);
             const downloadURL = await getDownloadURL(storageRef);
             await setDoc(docRef, { profileImage: downloadURL }, { merge: true });
         } catch (error) {
