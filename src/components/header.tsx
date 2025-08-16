@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
+
+'use client';
+import React, { useState, useRef } from 'react';
 import { useAdmin } from '@/context/admin-context';
 
 const Header = () => {
   const { setOpen } = useAdmin();
-  const [clickCount, setClickCount] = useState(0);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
 
-  const handleClick = () => {
-    const newClickCount = clickCount + 1;
-    setClickCount(newClickCount);
-    if (newClickCount >= 4) {
+  const handleMouseDown = () => {
+    longPressTimer.current = setTimeout(() => {
       setOpen(true);
-      setClickCount(0); // Reset after opening
+    }, 1500); // 1.5 seconds for long press
+  };
+
+  const handleMouseUp = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
     }
   };
+
+  const handleTouchStart = () => {
+    longPressTimer.current = setTimeout(() => {
+      setOpen(true);
+    }, 1500);
+  };
+
+  const handleTouchEnd = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+    }
+  };
+
 
   return (
     <header className="bg-black text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <button onClick={handleClick} className="text-2xl font-black tracking-tighter focus:outline-none">
+          <button 
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="text-2xl font-black tracking-tighter focus:outline-none"
+            // Prevent context menu on long press
+            onContextMenu={(e) => e.preventDefault()}
+          >
             HYREXVERSE
           </button>
         </div>
