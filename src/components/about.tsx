@@ -1,5 +1,4 @@
 import React from 'react';
-import SocialButtons from './social-buttons';
 import StaticImage from './static-image';
 
 const About = () => {
@@ -9,7 +8,7 @@ const About = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
                 <p className="mt-4 text-lg text-black/80">
-                    I'm Priyatam Behera, a passionate and versatile creative professional. With a strong foundation in both website development and graphic design, I build and beautify digital experiences. My journey has also led me to the dynamic worlds of social media influencing and YouTube content creation, where I share my knowledge and connect with a growing community. I thrive on blending technical skill with creative vision to deliver unique and impactful results.
+                    I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!
                 </p>
             </div>
             <div className="order-1 md:order-2">
