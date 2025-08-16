@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
 const AdminPanel = () => {
-    const { siteData, updateSiteData, isAdminPanelOpen, setAdminPanelOpen } = useSiteDataContext();
+    const { siteData, updateSiteData, isAdminPanelOpen, setAdminPanelOpen, isUploading } = useSiteDataContext();
     const [formData, setFormData] = useState(siteData);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(siteData.profileImage);
@@ -18,8 +18,10 @@ const AdminPanel = () => {
 
     useEffect(() => {
         setFormData(siteData);
-        setPreviewImage(siteData.profileImage);
-    }, [siteData]);
+        if (!isUploading) {
+            setPreviewImage(siteData.profileImage);
+        }
+    }, [siteData, isUploading]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -36,8 +38,7 @@ const AdminPanel = () => {
 
     const handleSaveChanges = async () => {
         setIsSaving(true);
-        const { profileImage, ...textData } = formData;
-        await updateSiteData(textData, imageFile);
+        await updateSiteData(formData, imageFile);
         setIsSaving(false);
         setAdminPanelOpen(false);
         setImageFile(null); // Reset file after upload
@@ -65,9 +66,16 @@ const AdminPanel = () => {
                     <div>
                         <label>Profile Image</label>
                         <div className="mt-2 flex items-center gap-4">
-                            {previewImage && (
-                                <Image src={previewImage} alt="Profile preview" width={80} height={80} className="rounded-md object-cover" />
-                            )}
+                            <div className="relative">
+                                {previewImage && (
+                                    <Image src={previewImage} alt="Profile preview" width={80} height={80} className="rounded-md object-cover" />
+                                )}
+                                {isUploading && (
+                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
+                                        <Loader2 className="h-6 w-6 animate-spin text-white" />
+                                    </div>
+                                )}
+                            </div>
                              <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
                                 Choose File
                             </Button>
@@ -83,8 +91,8 @@ const AdminPanel = () => {
                 </div>
                 <DialogFooter>
                     <Button variant="outline" onClick={() => setAdminPanelOpen(false)}>Cancel</Button>
-                    <Button onClick={handleSaveChanges} disabled={isSaving}>
-                        {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                    <Button onClick={handleSaveChanges} disabled={isSaving || isUploading}>
+                        {(isSaving || isUploading) ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                         Save Changes
                     </Button>
                 </DialogFooter>

@@ -13,7 +13,8 @@ export interface SiteData {
 interface SiteDataContextType {
   siteData: SiteData;
   loading: boolean;
-  updateSiteData: (newData: Partial<SiteData>, imageFile?: File | null) => Promise<void>;
+  isUploading: boolean;
+  updateSiteData: (newData: Partial<Omit<SiteData, 'profileImage'>>, imageFile?: File | null) => Promise<void>;
   isAdminPanelOpen: boolean;
   setAdminPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -21,11 +22,11 @@ interface SiteDataContextType {
 const SiteDataContext = createContext<SiteDataContextType | undefined>(undefined);
 
 export const SiteDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const { siteData, loading, updateSiteData } = useSiteData();
+  const { siteData, loading, isUploading, updateSiteData } = useSiteData();
   const [isAdminPanelOpen, setAdminPanelOpen] = useState(false);
 
   return (
-    <SiteDataContext.Provider value={{ siteData, loading, updateSiteData, isAdminPanelOpen, setAdminPanelOpen }}>
+    <SiteDataContext.Provider value={{ siteData, loading, isUploading, updateSiteData, isAdminPanelOpen, setAdminPanelOpen }}>
       {children}
     </SiteDataContext.Provider>
   );

@@ -15,6 +15,7 @@ const initialData: SiteData = {
 export const useSiteData = () => {
   const [siteData, setSiteData] = useState<SiteData>(initialData);
   const [loading, setLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     const docRef = doc(db, 'site', 'settings');
@@ -22,6 +23,7 @@ export const useSiteData = () => {
       if (docSnap.exists()) {
         setSiteData(docSnap.data() as SiteData);
       } else {
+        // Use setDoc to create the document if it doesn't exist.
         setDoc(docRef, initialData);
         setSiteData(initialData);
       }
@@ -34,19 +36,26 @@ export const useSiteData = () => {
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = async (newData: Partial<SiteData>, imageFile?: File | null) => {
+  const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage'>>, imageFile?: File | null) => {
     const docRef = doc(db, 'site', 'settings');
-    let updatedData = { ...newData };
+    
+    // Immediately update text data
+    await setDoc(docRef, newData, { merge: true });
 
     if (imageFile) {
+        setIsUploading(true);
         const storageRef = ref(storage, `profileImages/${imageFile.name}`);
-        await uploadBytes(storageRef, imageFile);
-        const downloadURL = await getDownloadURL(storageRef);
-        updatedData.profileImage = downloadURL;
+        try {
+            await uploadBytes(storageRef, imageFile);
+            const downloadURL = await getDownloadURL(storageRef);
+            await setDoc(docRef, { profileImage: downloadURL }, { merge: true });
+        } catch (error) {
+            console.error("Error uploading image: ", error);
+        } finally {
+            setIsUploading(false);
+        }
     }
-    
-    await setDoc(docRef, updatedData, { merge: true });
   };
 
-  return { siteData, loading, updateSiteData };
+  return { siteData, loading, isUploading, updateSiteData };
 };
