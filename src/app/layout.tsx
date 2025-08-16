@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: '911akhil | Creative Portfolio',
+  title: 'Hyrexverse | Creative Portfolio',
   description: 'A modern creative portfolio website.',
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Youtube, Instagram, Info as InfoIcon, Star } from 'lucide-react';
+import { Youtube, Instagram, Info as InfoIcon } from 'lucide-react';
 
 const Info = () => {
   return (
@@ -38,7 +38,7 @@ const Info = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-card/50 backdrop-blur-sm border-primary/20">
+          <Card className="bg-card/50 backdrop-blur-sm border-primary/20 md:col-span-2 lg:col-span-1">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <InfoIcon className="text-primary" />
@@ -51,21 +51,6 @@ const Info = () => {
               </p>
             </CardContent>
           </Card>
-
-          <Card className="col-span-1 md:col-span-2 lg:col-span-3 bg-card/50 backdrop-blur-sm border-primary/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Star className="text-primary" />
-                <span>Trusted Design and Useful Information</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                My work focuses on delivering high-quality, trusted designs backed by useful information and transparent processes. I believe in creating products that are not only beautiful but also intuitive and valuable to the user.
-              </p>
-            </CardContent>
-          </Card>
-
         </div>
       </div>
     </section>
