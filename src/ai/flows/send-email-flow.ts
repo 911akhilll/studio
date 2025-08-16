@@ -14,7 +14,7 @@ import { Resend } from 'resend';
 // use process.env.RESEND_API_KEY
 const resend = new Resend('re_123456789');
 
-export const SendEmailSchema = z.object({
+const SendEmailSchema = z.object({
   to: z.string().email().describe('The email address to send the message to.'),
   fromName: z.string().describe("The sender's name."),
   fromEmail: z.string().email().describe("The sender's email address."),
