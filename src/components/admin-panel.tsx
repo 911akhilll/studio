@@ -120,9 +120,11 @@ const AdminPanel = () => {
                 </div>
                 <div>
                   <Label htmlFor="profileImage">Profile Image</Label>
-                  <Input id="profileImage" type="file" accept="image/*" onChange={handleImageUpload} />
-                  <p className="text-xs text-muted-foreground mt-1">Or paste an image URL below:</p>
-                  <Input value={profileImage} onChange={(e) => setProfileImage(e.target.value)} placeholder="Image URL" />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Upload from your device for a live preview. To save permanently, paste an image URL below.
+                  </p>
+                  <Input id="profileImage" type="file" accept="image/*" onChange={handleImageUpload} className="mt-1" />
+                  <Input value={profileImage} onChange={(e) => setProfileImage(e.target.value)} placeholder="Paste image URL to save permanently" className="mt-2" />
                 </div>
               </div>
             </div>
