@@ -8,24 +8,11 @@ const About = () => {
   return (
     <section id="about" className="py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1">
-                <p className="mt-4 text-lg text-black/80">
-                    {siteData.aboutText}
-                </p>
-            </div>
-            <div className="order-1 md:order-2">
-                {siteData.profileImage && (
-                  <div className="relative w-full h-80">
-                    <img 
-                        src={siteData.profileImage}
-                        alt="Profile image"
-                        data-ai-hint="profile"
-                        className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] object-cover w-full h-full"
-                    />
-                  </div>
-                )}
-            </div>
+        <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-8">About Me</h2>
+            <p className="mt-4 text-lg text-black/80">
+                {siteData.aboutText}
+            </p>
         </div>
       </div>
     </section>

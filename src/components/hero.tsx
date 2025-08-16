@@ -9,6 +9,14 @@ const Hero = () => {
   return (
     <section id="hero" className="relative bg-primary text-primary-foreground py-24 sm:py-32 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div className="flex justify-center mb-8">
+                <img
+                    src={siteData.profileImage}
+                    alt="Profile image"
+                    data-ai-hint="profile"
+                    className="rounded-full h-40 w-40 object-cover border-4 border-white shadow-lg"
+                />
+            </div>
             <h1 className="text-5xl md:text-8xl font-black leading-none tracking-tighter uppercase">
                 {siteData.heroTitle}
             </h1>
