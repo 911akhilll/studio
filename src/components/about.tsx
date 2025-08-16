@@ -15,8 +15,8 @@ const About = () => {
                     src="/images/profileimg.png"
                     alt="Hyrexverse avatar"
                     data-ai-hint="gaming avatar"
-                    width={600}
-                    height={400}
+                    width={450}
+                    height={300}
                     className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)]"
                 />
             </div>
