@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Youtube, Instagram, Send } from 'lucide-react';
-import SocialButtons from './social-buttons';
 
 const services = [
     {
@@ -40,9 +39,6 @@ const Services = () => {
                     </CardContent>
                 </Card>
             ))}
-        </div>
-        <div className="text-center mt-12">
-            <SocialButtons />
         </div>
       </div>
     </section>
