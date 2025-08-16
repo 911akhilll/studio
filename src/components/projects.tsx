@@ -7,7 +7,7 @@ const projects = [
   {
     title: 'EXHIBITION',
     description: 'A curated selection of our most innovative projects.',
-    image: 'https://placehold.co/200x150.png',
+    image: 'https://placehold.co/400x300.png',
     hint: 'art exhibition'
   },
 ];
@@ -24,21 +24,18 @@ const Projects = () => {
         <div className="md:col-span-7 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className='animate-on-scroll'>
                 {projects.map((project, index) => (
-                    <div key={index} className="bg-secondary p-6 rounded-lg relative">
-                        <div className="flex items-center space-x-4">
-                            <Image src={project.image} alt={project.title} width={150} height={100} className="rounded-md" data-ai-hint={project.hint} />
-                            <div>
-                                <h3 className="font-bold text-lg">{project.title}</h3>
-                                <div className="flex space-x-1 mt-2">
-                                    <span className="w-4 h-1 bg-accent rounded-full"></span>
-                                    <span className="w-1 h-1 bg-border rounded-full"></span>
-                                    <span className="w-1 h-1 bg-border rounded-full"></span>
-                                    <span className="w-1 h-1 bg-border rounded-full"></span>
-                                </div>
+                    <div key={index} className="bg-card border border-border p-6 rounded-lg relative group overflow-hidden">
+                        <Image src={project.image} alt={project.title} width={400} height={300} className="rounded-md w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={project.hint} />
+                        <div className="mt-4">
+                            <h3 className="font-bold text-xl">{project.title}</h3>
+                            <div className="flex space-x-1 mt-2">
+                                <span className="w-6 h-1 bg-accent rounded-full"></span>
+                                <span className="w-2 h-1 bg-border rounded-full"></span>
+                                <span className="w-2 h-1 bg-border rounded-full"></span>
                             </div>
                         </div>
-                        <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent rounded-md flex items-center justify-center">
-                            <Button variant="default" size="icon" className='bg-foreground text-background hover:bg-foreground/80'>
+                        <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-accent rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                            <Button variant="default" size="icon" className='bg-foreground text-background hover:bg-foreground/80 rounded-full w-12 h-12'>
                                 <ArrowRight />
                             </Button>
                         </div>
@@ -46,19 +43,19 @@ const Projects = () => {
                 ))}
             </div>
 
-            <div className='relative h-96 w-full md:h-[60vh] animate-on-scroll'>
+            <div className='relative h-96 w-full md:h-[60vh] animate-on-scroll group'>
                 <Image
                     src="https://placehold.co/400x600.png"
                     alt="Black gloved hand"
                     fill
-                    className="object-contain"
+                    className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
                     data-ai-hint="gloved hand"
                 />
             </div>
         </div>
 
         <div className="absolute right-8 bottom-8 md:right-16 md:bottom-16 flex flex-col items-center space-y-4 animate-on-scroll">
-            <Button variant="outline" size="icon" className="rounded-full border-2 h-14 w-14">
+            <Button variant="outline" size="icon" className="rounded-full border-2 h-14 w-14 hover:bg-accent hover:border-accent transition-colors">
                 <ArrowDown />
             </Button>
         </div>

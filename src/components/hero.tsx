@@ -10,7 +10,7 @@ const Hero = () => {
         
         <div className="md:col-span-5 lg:col-span-4">
           <div className='flex flex-col items-start'>
-            <h1 className="text-8xl md:text-9xl font-bold font-display leading-none">Lab.</h1>
+            <h1 className="text-9xl md:text-[10rem] font-bold font-display leading-none">Lab.</h1>
             <div className="hidden md:flex items-center space-x-4 mt-12">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 6H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -45,11 +45,11 @@ const Hero = () => {
             </div>
             
             <div className='absolute bottom-8 right-8 z-20 flex items-center space-x-4'>
-                <div className='text-right'>
+                <div className='text-right max-w-xs'>
                     <p className='text-sm font-semibold'>X/LAB®</p>
                     <p className='text-xs text-muted-foreground'>For a new generation of users across different elements, we explore new forms and new ideas</p>
                 </div>
-                <Button variant='default' size='icon' className='bg-foreground text-background hover:bg-foreground/80'>
+                <Button variant='default' size='icon' className='bg-foreground text-background hover:bg-foreground/80 flex-shrink-0'>
                     <ArrowRight />
                 </Button>
             </div>

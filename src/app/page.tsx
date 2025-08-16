@@ -4,6 +4,7 @@ import Header from '@/components/header';
 import Hero from '@/components/hero';
 import Projects from '@/components/projects';
 import Footer from '@/components/footer';
+import StarFollower from '@/components/star-follower';
 
 export default function Home() {
 
@@ -25,7 +26,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-screen text-foreground">
+      <StarFollower />
       <Header />
       <main>
         <Hero />
