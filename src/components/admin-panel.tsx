@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from "@/hooks/use-toast";
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { saveSettings } from '@/ai/flows/save-settings-flow';
+import type { SaveSettingsInput } from '@/ai/flows/save-settings-flow';
 
 const AdminPanel = () => {
   const { 
@@ -26,6 +28,7 @@ const AdminPanel = () => {
   } = useAdmin();
 
   const [password, setPassword] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   const handlePasswordSubmit = () => {
@@ -52,6 +55,30 @@ const AdminPanel = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleSaveChanges = async () => {
+    setIsSaving(true);
+    try {
+      const settings: SaveSettingsInput = {
+        heroTitle,
+        heroSubtitle,
+        aboutText,
+        profileImage,
+        primaryColor,
+        secondaryColor,
+        backgroundColor,
+        textColor,
+        useAnimation,
+      };
+      await saveSettings(settings);
+      toast({ title: "Success", description: "Your changes have been saved. The AI will now update the files." });
+    } catch (error) {
+      toast({ variant: "destructive", title: "Error", description: "Could not save changes." });
+      console.error(error);
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -126,7 +153,12 @@ const AdminPanel = () => {
               </div>
             </div>
             
-            <Button variant="outline" className="mt-4" onClick={() => setAuthenticated(false)}>Logout</Button>
+            <div className="flex justify-between items-center mt-6">
+              <Button variant="outline" onClick={() => setAuthenticated(false)}>Logout</Button>
+              <Button onClick={handleSaveChanges} disabled={isSaving}>
+                {isSaving ? 'Saving...' : 'Save Changes'}
+              </Button>
+            </div>
           </div>
         )}
       </DialogContent>
