@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Star, Home, Trash2, Youtube, MessageSquare, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
+import imageCompression from 'browser-image-compression';
 
 const AdminPageComponent = () => {
     const { siteData, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, uploadProfileImage, loading } = useSiteDataContext();
@@ -29,6 +31,7 @@ const AdminPageComponent = () => {
     const [isUploading, setIsUploading] = useState(false);
 
     const router = useRouter();
+    const { toast } = useToast();
 
     useEffect(() => {
         if (!loading) {
@@ -46,6 +49,10 @@ const AdminPageComponent = () => {
         const { reviews, videos, ...dataToUpdate } = formData;
         await updateSiteData(dataToUpdate);
         setIsSaving(false);
+        toast({
+          title: "Success!",
+          description: "General settings have been saved.",
+        });
     };
 
     const handlePasswordSubmit = (e: React.FormEvent) => {
@@ -69,11 +76,20 @@ const AdminPageComponent = () => {
       setReviewText('');
       setReviewRating(5);
       setIsAddingReview(false);
+      toast({
+          title: "Success!",
+          description: "New review has been posted.",
+      });
     };
 
     const handleDeleteReview = async (reviewId: string) => {
       if (window.confirm('Are you sure you want to delete this review?')) {
         await deleteReview(reviewId);
+        toast({
+            title: "Deleted",
+            description: "The review has been removed.",
+            variant: "destructive"
+        });
       }
     };
 
@@ -87,11 +103,20 @@ const AdminPageComponent = () => {
         setVideoTitle('');
         setVideoUrl('');
         setIsAddingVideo(false);
+        toast({
+            title: "Success!",
+            description: "New video has been added.",
+        });
     };
 
     const handleDeleteVideo = async (videoId: string) => {
         if (window.confirm('Are you sure you want to delete this video?')) {
             await deleteVideo(videoId);
+            toast({
+                title: "Deleted",
+                description: "The video has been removed.",
+                variant: "destructive"
+            });
         }
     };
 
@@ -99,8 +124,28 @@ const AdminPageComponent = () => {
         const file = e.target.files?.[0];
         if (file) {
             setIsUploading(true);
-            await uploadProfileImage(file);
-            setIsUploading(false);
+            try {
+                const options = {
+                    maxSizeMB: 0.5, // (max file size in MB)
+                    maxWidthOrHeight: 800, // (max width or height in pixels)
+                    useWebWorker: true,
+                };
+                const compressedFile = await imageCompression(file, options);
+                await uploadProfileImage(compressedFile);
+                toast({
+                    title: "Upload Successful!",
+                    description: "Your new profile image has been saved.",
+                });
+            } catch (error) {
+                console.error("Error processing image:", error);
+                 toast({
+                    title: "Upload Failed",
+                    description: "There was an error uploading your image.",
+                    variant: "destructive",
+                });
+            } finally {
+                setIsUploading(false);
+            }
         }
     };
 
