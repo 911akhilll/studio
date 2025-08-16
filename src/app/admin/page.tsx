@@ -4,12 +4,12 @@ import { useSiteDataContext, SiteData, SiteDataProvider } from '@/contexts/site-
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Loader2, Star, Home } from 'lucide-react';
+import { Loader2, Star, Home, Trash2, Youtube, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 
 const AdminPageComponent = () => {
-    const { siteData, updateSiteData, addReview, loading } = useSiteDataContext();
+    const { siteData, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, loading } = useSiteDataContext();
     const [formData, setFormData] = useState<SiteData>(siteData);
     const [isSaving, setIsSaving] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,6 +19,10 @@ const AdminPageComponent = () => {
     const [reviewText, setReviewText] = useState('');
     const [reviewRating, setReviewRating] = useState(5);
     const [isAddingReview, setIsAddingReview] = useState(false);
+
+    const [videoTitle, setVideoTitle] = useState('');
+    const [videoUrl, setVideoUrl] = useState('');
+    const [isAddingVideo, setIsAddingVideo] = useState(false);
     
     const router = useRouter();
 
@@ -61,7 +65,31 @@ const AdminPageComponent = () => {
       setReviewText('');
       setReviewRating(5);
       setIsAddingReview(false);
-    }
+    };
+
+    const handleDeleteReview = async (reviewId: string) => {
+      if (window.confirm('Are you sure you want to delete this review?')) {
+        await deleteReview(reviewId);
+      }
+    };
+
+    const handleAddVideo = async () => {
+        if (!videoTitle || !videoUrl) return;
+        setIsAddingVideo(true);
+        await addVideo({
+            title: videoTitle,
+            url: videoUrl,
+        });
+        setVideoTitle('');
+        setVideoUrl('');
+        setIsAddingVideo(false);
+    };
+
+    const handleDeleteVideo = async (videoId: string) => {
+        if (window.confirm('Are you sure you want to delete this video?')) {
+            await deleteVideo(videoId);
+        }
+    };
 
     if (!isAuthenticated) {
         return (
@@ -103,6 +131,29 @@ const AdminPageComponent = () => {
                         <Home className="h-6 w-6" />
                     </Button>
                 </div>
+                
+                {/* Site Overview */}
+                <Card className="mb-8 bg-card border-border">
+                    <CardHeader>
+                        <CardTitle>Site Overview</CardTitle>
+                    </CardHeader>
+                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex items-center gap-4 p-4 bg-muted rounded-lg">
+                           <MessageSquare className="h-8 w-8 text-primary" />
+                           <div>
+                               <p className="text-2xl font-bold">{siteData.reviews?.length || 0}</p>
+                               <p className="text-muted-foreground">Total Reviews</p>
+                           </div>
+                        </div>
+                        <div className="flex items-center gap-4 p-4 bg-muted rounded-lg">
+                           <Youtube className="h-8 w-8 text-primary" />
+                           <div>
+                               <p className="text-2xl font-bold">{siteData.videos?.length || 0}</p>
+                               <p className="text-muted-foreground">Total YouTube Videos</p>
+                           </div>
+                        </div>
+                    </CardContent>
+                </Card>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* General Settings */}
@@ -127,10 +178,6 @@ const AdminPageComponent = () => {
                                 <label htmlFor="contactEmail" className="text-sm font-medium text-muted-foreground">Contact Email</label>
                                 <Input id="contactEmail" name="contactEmail" value={formData.contactEmail} onChange={handleInputChange} className="bg-input text-foreground" />
                             </div>
-                            <div>
-                                <label htmlFor="embeddedHtml" className="text-sm font-medium text-muted-foreground">Embedded HTML</label>
-                                <Textarea id="embeddedHtml" name="embeddedHtml" value={formData.embeddedHtml} onChange={handleInputChange} rows={8} className="bg-input text-foreground font-mono text-sm" />
-                            </div>
                             <Button onClick={handleSaveChanges} disabled={isSaving} className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                                 {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                                 Save General Settings
@@ -138,8 +185,8 @@ const AdminPageComponent = () => {
                         </CardContent>
                     </Card>
 
-                    {/* Review Management */}
                     <div className="space-y-8">
+                      {/* Review Management */}
                       <Card className="bg-card border-border">
                           <CardHeader>
                               <CardTitle>Add a New Review</CardTitle>
@@ -174,8 +221,78 @@ const AdminPageComponent = () => {
                               </Button>
                           </CardContent>
                       </Card>
+
+                      {/* YouTube Video Management */}
+                      <Card className="bg-card border-border">
+                          <CardHeader>
+                              <CardTitle>Add a YouTube Video</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                              <div>
+                                  <label htmlFor="videoTitle" className="text-sm font-medium text-muted-foreground">Video Title</label>
+                                  <Input id="videoTitle" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} placeholder="e.g., My Latest Vlog" className="bg-input text-foreground" />
+                              </div>
+                              <div>
+                                  <label htmlFor="videoUrl" className="text-sm font-medium text-muted-foreground">YouTube Video URL</label>
+                                  <Input id="videoUrl" value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} placeholder="https://www.youtube.com/watch?v=..." className="bg-input text-foreground" />
+                              </div>
+                              <Button onClick={handleAddVideo} disabled={isAddingVideo} className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                                  {isAddingVideo ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                                  Add Video
+                              </Button>
+                          </CardContent>
+                      </Card>
                     </div>
                 </div>
+
+                {/* Reviews List */}
+                <Card className="mt-8 bg-card border-border">
+                    <CardHeader>
+                        <CardTitle>Reviews List</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        {siteData.reviews && siteData.reviews.length > 0 ? (
+                            siteData.reviews.map(review => (
+                                <div key={review.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                                    <div>
+                                        <div className="flex">
+                                            {Array.from({ length: 5 }).map((_, i) => (
+                                                <Star key={i} className={`h-5 w-5 ${i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-600'}`} />
+                                            ))}
+                                        </div>
+                                        <p className="mt-1 text-foreground">{review.text}</p>
+                                    </div>
+                                    <Button variant="ghost" size="icon" onClick={() => handleDeleteReview(review.id)}>
+                                        <Trash2 className="h-5 w-5 text-destructive" />
+                                    </Button>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-muted-foreground">No reviews posted yet.</p>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {/* Videos List */}
+                <Card className="mt-8 bg-card border-border">
+                    <CardHeader>
+                        <CardTitle>Videos List</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        {siteData.videos && siteData.videos.length > 0 ? (
+                            siteData.videos.map(video => (
+                                <div key={video.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                                    <p className="text-foreground">{video.title}</p>
+                                    <Button variant="ghost" size="icon" onClick={() => handleDeleteVideo(video.id)}>
+                                        <Trash2 className="h-5 w-5 text-destructive" />
+                                    </Button>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-muted-foreground">No videos added yet.</p>
+                        )}
+                    </CardContent>
+                </Card>
             </div>
         </div>
     );

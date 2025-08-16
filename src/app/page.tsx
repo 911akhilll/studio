@@ -9,7 +9,7 @@ import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import { SiteDataProvider } from '@/contexts/site-data-context';
 import Testimonials from '@/components/testimonials';
-import FeaturedContent from '@/components/featured-content';
+import YouTubeVideos from '@/components/youtube-videos';
 
 
 const PageContent = () => {
@@ -20,9 +20,9 @@ const PageContent = () => {
         <Hero />
         <About />
         <Services />
+        <YouTubeVideos />
         <Portfolio />
         <Testimonials />
-        <FeaturedContent />
         <Contact />
       </main>
       <Footer />
