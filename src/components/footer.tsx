@@ -11,13 +11,12 @@ const Footer = () => {
     <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-foreground relative">
       <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:text-left mb-4 md:mb-0">
-          <p className="font-bold text-lg">911akhil</p>
+          <p className="font-bold text-lg">Hyrexverse</p>
           <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} All Rights Reserved.</p>
         </div>
         <div className="flex items-center space-x-6">
            <a href="#" className="text-sm hover:text-primary transition-colors">Instagram</a>
-           <a href="#" className="text-sm hover:text-primary transition-colors">Twitter</a>
-           <a href="#" className="text-sm hover:text-primary transition-colors">LinkedIn</a>
+           <a href="#" className="text-sm hover:text-primary transition-colors">YouTube</a>
         </div>
         <div className="hidden md:block">
             <Button variant="ghost" size="icon" onClick={scrollToTop} aria-label="Scroll to top">

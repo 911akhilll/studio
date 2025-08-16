@@ -8,17 +8,10 @@ const Hero = () => {
             className="text-6xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tighter" 
             style={{ fontFamily: "'Anton', sans-serif" }}
         >
-            CREATIVE
-        </h1>
-        <h1 
-            className="text-6xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tighter text-primary" 
-            style={{ fontFamily: "'Anton', sans-serif" }}
-        >
-            DEVELOPER
+            HYREXVERSE
         </h1>
         <p className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground">
-            I craft modern, engaging, and beautiful digital experiences.
-            Specializing in web development and interactive design.
+            Trusted Design and Useful Information.
         </p>
       </div>
     </section>

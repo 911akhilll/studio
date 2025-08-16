@@ -1,8 +1,7 @@
 'use client';
 import Header from '@/components/header';
 import Hero from '@/components/hero';
-import About from '@/components/about';
-import Projects from '@/components/projects';
+import Info from '@/components/info';
 import Footer from '@/components/footer';
 import AnimatedBackground from '@/components/animated-background';
 
@@ -13,8 +12,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <About />
-        <Projects />
+        <Info />
       </main>
       <Footer />
     </div>
