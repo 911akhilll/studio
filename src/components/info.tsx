@@ -38,7 +38,7 @@ const InfoCard = ({ icon, title, text, linkText, href, delay = 0 }: { icon: Reac
   return (
     <div ref={cardRef}>
       <Card className={cn(
-        "bg-white/5 backdrop-blur-lg border-primary/20 rounded-2xl transition-all duration-700 opacity-0",
+        "bg-background/80 backdrop-blur-lg border-primary/20 rounded-2xl transition-all duration-700 opacity-0 shadow-lg",
         isVisible && "fade-in-up"
         )}
         style={{ animationDelay: `${delay}s` }}
