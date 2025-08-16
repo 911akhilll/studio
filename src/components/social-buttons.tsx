@@ -5,7 +5,7 @@ import { Youtube, Instagram, Send } from 'lucide-react';
 const SocialButtons = () => {
     const socialLinks = [
         {
-            href: "https://www.youtube.com",
+            href: "https://youtube.com/@hyrexverse1?si=c4NbNmZTlqsZtKf5",
             icon: <Youtube />,
             label: "YouTube",
             className: "bg-red-600 hover:bg-red-700"
