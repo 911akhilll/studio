@@ -8,7 +8,9 @@ import Portfolio from '@/components/portfolio';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import { SiteDataProvider } from '@/contexts/site-data-context';
-import AdminPanel from '@/components/admin-panel';
+import Testimonials from '@/components/testimonials';
+import FeaturedContent from '@/components/featured-content';
+
 
 const PageContent = () => {
   return (
@@ -19,10 +21,11 @@ const PageContent = () => {
         <About />
         <Services />
         <Portfolio />
+        <Testimonials />
+        <FeaturedContent />
         <Contact />
       </main>
       <Footer />
-      <AdminPanel />
     </div>
   );
 };

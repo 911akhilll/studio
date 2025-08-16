@@ -1,7 +1,6 @@
 'use client';
-
-import React, { createContext, useContext, useState } from 'react';
-import { useSiteData } from '@/hooks/use-site-data';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useSiteData, Review } from '@/hooks/use-site-data';
 
 export interface SiteData {
   heroTitle: string;
@@ -9,25 +8,24 @@ export interface SiteData {
   aboutText: string;
   profileImage: string;
   contactEmail: string;
+  embeddedHtml: string;
+  reviews: Review[];
 }
 
 interface SiteDataContextType {
   siteData: SiteData;
   loading: boolean;
-  isUploading: boolean;
-  updateSiteData: (newData: Partial<Omit<SiteData, 'profileImage'>>) => Promise<void>;
-  isAdminPanelOpen: boolean;
-  setAdminPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  updateSiteData: (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews'>>) => Promise<void>;
+  addReview: (newReview: Omit<Review, 'id'>) => Promise<void>;
 }
 
 const SiteDataContext = createContext<SiteDataContextType | undefined>(undefined);
 
 export const SiteDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const { siteData, loading, isUploading, updateSiteData } = useSiteData();
-  const [isAdminPanelOpen, setAdminPanelOpen] = useState(false);
+  const { siteData, loading, updateSiteData, addReview } = useSiteData();
 
   return (
-    <SiteDataContext.Provider value={{ siteData, loading, isUploading, updateSiteData, isAdminPanelOpen, setAdminPanelOpen }}>
+    <SiteDataContext.Provider value={{ siteData, loading, updateSiteData, addReview }}>
       {children}
     </SiteDataContext.Provider>
   );

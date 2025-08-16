@@ -73,10 +73,6 @@
   body {
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
   }
 }
 
@@ -103,7 +99,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 9999px;
+    border-radius: 9999px; 
     border: 3px solid transparent;
     background: linear-gradient(45deg, #333, #000) border-box;
     mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
