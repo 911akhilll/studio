@@ -4,32 +4,34 @@ import StaticImage from './static-image';
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative bg-primary text-foreground pt-32 pb-16 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
-        <div className="text-center md:text-left">
-            <h1 className="text-7xl md:text-8xl font-black leading-none tracking-tighter uppercase">
-                Hyrexverse
-            </h1>
-            <p className="mt-4 text-2xl md:text-3xl font-bold">
-                A design agency....kinda
-            </p>
-            <p className="mt-2 max-w-xl mx-auto md:mx-0 text-lg">
-                Unlimited revisions and a flat monthly fee.
-            </p>
-            <Button size="lg" className="mt-8 bg-orange-500 text-black border-2 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:bg-orange-600 transition-all">
-                See Plans
-            </Button>
+    <section id="hero" className="relative bg-primary text-primary-foreground pt-40 pb-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary via-purple-800 to-background opacity-70"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center relative z-10">
+            <div className="text-center md:text-left">
+                <h1 className="text-6xl md:text-8xl font-black leading-none tracking-tighter uppercase font-display">
+                    Priyatam Behera
+                </h1>
+                <p className="mt-4 text-xl md:text-2xl font-bold text-accent">
+                    Website Developer | Graphic Designer | Influencer | YouTuber
+                </p>
+                <p className="mt-4 max-w-xl mx-auto md:mx-0 text-lg text-primary-foreground/80">
+                    Crafting digital experiences that inspire, engage, and convert.
+                </p>
+                <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground rounded-lg shadow-lg hover:bg-accent/90 transition-all transform hover:scale-105">
+                    <a href="#contact">Get In Touch</a>
+                </Button>
+            </div>
+            <div className="relative h-64 md:h-96">
+                <StaticImage 
+                    src="https://placehold.co/600x600.png" 
+                    alt="Priyatam Behera Profile Picture"
+                    data-ai-hint="man portrait"
+                    layout="fill"
+                    objectFit="contain"
+                    className="drop-shadow-2xl"
+                />
+            </div>
         </div>
-        <div className="relative h-64 md:h-full">
-            <StaticImage 
-                src="https://placehold.co/600x600.png" 
-                alt="Robot illustration"
-                data-ai-hint="robot illustration"
-                layout="fill"
-                objectFit="contain"
-            />
-        </div>
-      </div>
     </section>
   );
 };
