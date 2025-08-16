@@ -71,7 +71,7 @@ const AdminPanel = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-h-[80vh] overflow-y-auto bg-background text-foreground border-border">
         <DialogHeader>
           <DialogTitle>{isAuthenticated ? 'Admin Panel' : 'Admin Access'}</DialogTitle>
           <DialogDescription>
@@ -87,6 +87,7 @@ const AdminPanel = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handlePasswordSubmit()}
+              className="bg-input text-foreground border-border"
             />
             <Button onClick={handlePasswordSubmit} className="w-full">Login</Button>
           </div>
