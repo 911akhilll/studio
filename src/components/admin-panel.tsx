@@ -15,20 +15,14 @@ const isValidImageUrl = (url: string) => {
     if (url.startsWith('blob:')) {
         return true;
     }
-    // Check for http/https and a basic structure. This is more forgiving.
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-        // Very basic check to avoid crashing the URL constructor
-        // while the user is typing.
-        if (!url.includes('.')) return false;
-        try {
-            // This will throw an error for invalid URLs, which we catch.
-            new URL(url);
-            return true;
-        } catch (e) {
-            return false;
-        }
+    // Check for http/https and a basic structure.
+    try {
+        new URL(url);
+        // Ensure it looks like an image file
+        return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
+    } catch (e) {
+        return false;
     }
-    return false;
 }
 
 const AdminPanel = () => {
@@ -138,8 +132,8 @@ const AdminPanel = () => {
                             accept="image/*"
                         />
                          <div className="mt-4 space-y-2">
-                             <label htmlFor="profileImage" className="text-sm font-medium">Or paste image URL</label>
-                             <p className="text-xs text-muted-foreground">Note: Use direct image links from sites like imgbb.com.</p>
+                             <label htmlFor="profileImage" className="text-sm font-medium">Or paste direct image URL</label>
+                             <p className="text-xs text-muted-foreground">Note: Use a direct image link ending in .jpg, .png, etc.</p>
                              <Input id="profileImage" name="profileImage" value={formData.profileImage} onChange={handleInputChange} placeholder="https://i.ibb.co/your-image.png"/>
                          </div>
                     </div>
