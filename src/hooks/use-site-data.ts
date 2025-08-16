@@ -34,14 +34,18 @@ export const useSiteData = () => {
 
   // Effect for main site settings
   useEffect(() => {
-    setLoading(true);
     const docRef = doc(db, 'site', 'settings');
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setSiteData(prev => ({ ...prev, ...data }));
+        setSiteData(prev => ({
+          ...prev,
+          heroTitle: data.heroTitle || initialData.heroTitle,
+          heroSubtitle: data.heroSubtitle || initialData.heroSubtitle,
+          aboutText: data.aboutText || initialData.aboutText,
+          contactEmail: data.contactEmail || initialData.contactEmail,
+        }));
       } else {
-        // If the document doesn't exist, create it with initial values
         setDoc(docRef, { 
             heroTitle: initialData.heroTitle,
             heroSubtitle: initialData.heroSubtitle,
@@ -49,10 +53,8 @@ export const useSiteData = () => {
             contactEmail: initialData.contactEmail
         }).catch(err => console.error("Error creating initial settings:", err));
       }
-      // Keep loading true until all data is fetched
     }, (error) => {
       console.error("Error fetching site settings:", error);
-      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -74,10 +76,8 @@ export const useSiteData = () => {
         } as Review;
       });
       setSiteData(prev => ({ ...prev, reviews }));
-      setLoading(false); // All data is loaded now
     }, (error) => {
       console.error("Error fetching reviews:", error);
-      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -94,14 +94,26 @@ export const useSiteData = () => {
             ...doc.data()
         } as YouTubeVideo));
         setSiteData(prev => ({ ...prev, videos }));
-        setLoading(false); // All data is loaded now
     }, (error) => {
         console.error("Error fetching videos:", error);
-        setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Combined effect to manage loading state
+  useEffect(() => {
+    const checkDataLoaded = () => {
+      // Set loading to false once we have some data.
+      // This is a simplification; a more robust solution might wait for all listeners.
+      if (siteData.heroTitle !== initialData.heroTitle) {
+          setLoading(false);
+      }
+    }
+    // Give listeners time to fire
+    const timer = setTimeout(checkDataLoaded, 1500); 
+    return () => clearTimeout(timer);
+  }, [siteData.heroTitle]);
 
 
   const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => {
