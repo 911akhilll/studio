@@ -10,16 +10,25 @@ import Image from 'next/image';
 
 // Helper to check for a valid URL format that next/image can handle
 const isValidImageUrl = (url: string) => {
+    if (!url) return false;
+    // Allow blob URLs from local file selections
     if (url.startsWith('blob:')) {
         return true;
     }
-    try {
-        new URL(url);
-        // Check for common image extensions
-        return /\.(jpeg|jpg|gif|png|webp)$/.test(new URL(url).pathname);
-    } catch (e) {
-        return false;
+    // Check for http/https and a basic structure. This is more forgiving.
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        // Very basic check to avoid crashing the URL constructor
+        // while the user is typing.
+        if (!url.includes('.')) return false;
+        try {
+            // This will throw an error for invalid URLs, which we catch.
+            new URL(url);
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
+    return false;
 }
 
 const AdminPanel = () => {
@@ -108,8 +117,8 @@ const AdminPanel = () => {
                         <label className="text-sm font-medium">Profile Image</label>
                         <div className="mt-2 flex items-center gap-4">
                             <div className="relative w-20 h-20">
-                                {previewImage && isValidImageUrl(previewImage) && (
-                                    <Image src={previewImage} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
+                                {isValidImageUrl(previewImage || '') && (
+                                    <Image src={previewImage!} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
                                 )}
                                 {(isUploading || isSaving) && (
                                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-md">
@@ -130,8 +139,8 @@ const AdminPanel = () => {
                         />
                          <div className="mt-4 space-y-2">
                              <label htmlFor="profileImage" className="text-sm font-medium">Or paste image URL</label>
-                             <p className="text-xs text-muted-foreground">Note: Use direct image links (ending in .png, .jpg, etc.), not Google Drive share links.</p>
-                             <Input id="profileImage" name="profileImage" value={formData.profileImage} onChange={handleInputChange} placeholder="https://example.com/image.png"/>
+                             <p className="text-xs text-muted-foreground">Note: Use direct image links from sites like imgbb.com.</p>
+                             <Input id="profileImage" name="profileImage" value={formData.profileImage} onChange={handleInputChange} placeholder="https://i.ibb.co/your-image.png"/>
                          </div>
                     </div>
                 </div>
