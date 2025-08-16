@@ -1,5 +1,4 @@
 import React from 'react';
-import StaticImage from './static-image';
 
 const About = () => {
   return (
@@ -12,7 +11,7 @@ const About = () => {
                 </p>
             </div>
             <div className="order-1 md:order-2">
-                <StaticImage 
+                <img 
                     src="/images/_8ef3a7b5-22a4-4a41-860e-b7d1eb290566.png"
                     alt="Hyrexverse avatar"
                     data-ai-hint="gaming avatar"
