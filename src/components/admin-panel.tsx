@@ -8,16 +8,19 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
-// Helper to check for a valid URL format that next/image can handle
-const isValidImageUrl = (url: string) => {
+const isValidImageUrl = (url: string): boolean => {
     if (!url) return false;
     // Allow blob URLs from local file selections
     if (url.startsWith('blob:')) {
         return true;
     }
-    // Basic check for http/https and common image extensions.
-    // This is not foolproof but prevents most common errors.
-    return /^https?:\/\/.+\.(jpeg|jpg|gif|png|webp)$/i.test(url);
+    // Check for http/https protocols and common image extensions.
+    try {
+        const parsedUrl = new URL(url);
+        return ['http:', 'https:'].includes(parsedUrl.protocol) && /\.(jpeg|jpg|gif|png|webp)$/i.test(parsedUrl.pathname);
+    } catch (e) {
+        return false;
+    }
 }
 
 const AdminPanel = () => {
@@ -66,21 +69,17 @@ const AdminPanel = () => {
 
     const handleSaveChanges = async () => {
         setIsSaving(true);
-        // Construct the final data to be saved, ensuring profileImage is correctly handled
         const finalData = { ...formData };
         if (imageFile) {
-            // If there's a file, the profileImage URL will be set after upload
-            // We can clear it from the form data to avoid saving a stale URL
-             finalData.profileImage = '';
+            finalData.profileImage = '';
         } else {
-            // If no new file, use the URL from the form (which might have been pasted)
             finalData.profileImage = formData.profileImage;
         }
 
         await updateSiteData(finalData, imageFile);
         setIsSaving(false);
         setAdminPanelOpen(false);
-        setImageFile(null); // Reset file after upload
+        setImageFile(null); 
     };
 
     return (
@@ -105,7 +104,7 @@ const AdminPanel = () => {
                     <div>
                         <label className="text-sm font-medium">Profile Image</label>
                         <div className="mt-2 flex items-center gap-4">
-                            <div className="relative w-20 h-20">
+                            <div className="relative w-20 h-20 bg-muted rounded-md flex items-center justify-center">
                                 {isValidImageUrl(previewImage || '') && (
                                     <Image src={previewImage!} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
                                 )}
@@ -123,7 +122,7 @@ const AdminPanel = () => {
                         />
                          <div className="mt-4 space-y-2">
                              <label htmlFor="profileImage" className="text-sm font-medium">Or paste direct image URL</label>
-                             <p className="text-xs text-muted-foreground">Note: Use a direct image link ending in .jpg, .png, etc.</p>
+                             <p className="text-xs text-muted-foreground">Use a direct image link ending in .jpg, .png, etc.</p>
                              <Input id="profileImage" name="profileImage" value={formData.profileImage} onChange={handleInputChange} placeholder="https://i.ibb.co/your-image.png"/>
                          </div>
                     </div>
