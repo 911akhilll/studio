@@ -44,12 +44,12 @@ const Hero = () => {
                 </div>
             </div>
             
-            <div className='absolute bottom-8 right-8 z-20 flex items-center space-x-4'>
+            <div id="hero-action-button" className='absolute bottom-8 right-8 z-20 flex items-center space-x-4'>
                 <div className='text-right max-w-xs'>
                     <p className='text-sm font-semibold'>AKHIL®</p>
                     <p className='text-xs text-muted-foreground'>For a new generation of users across different elements, we explore new forms and new ideas</p>
                 </div>
-                <Button variant='default' size='icon' className='bg-foreground text-background hover:bg-foreground/80 flex-shrink-0'>
+                <Button variant='default' size='icon' className='bg-primary text-primary-foreground hover:bg-primary/80 flex-shrink-0'>
                     <ArrowRight />
                 </Button>
             </div>

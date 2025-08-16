@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const ScrollingStar = () => {
   const starRef = useRef<HTMLDivElement>(null);
+  const [styles, setStyles] = useState({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,37 +14,59 @@ const ScrollingStar = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
-      const scrollPercent = scrollY / (docHeight - windowHeight);
+      
+      const heroSection = document.getElementById('hero');
+      const projectsSection = document.getElementById('projects');
+      const heroActionButton = document.getElementById('hero-action-button');
+      const scrollDownButton = document.getElementById('scroll-down-button');
+      const projectCard1 = document.getElementById('project-card-1');
 
-      const isHeroVisible = scrollY < windowHeight;
+      let targetElement = null;
 
-      if (isHeroVisible) {
-        // In Hero section
-        const heroScroll = scrollY / windowHeight;
-        const top = 10 + heroScroll * 60; // Move down
-        const left = 50 + heroScroll * 30; // Move right
-        const scale = 1 + heroScroll * 0.5; // Grow
-        const rotation = heroScroll * 90; // Rotate
-        star.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
-        star.style.top = `${top}%`;
-        star.style.left = `${left}%`;
-        star.style.opacity = '1';
+      const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 0;
+      const projectsTop = projectsSection ? projectsSection.offsetTop : docHeight;
+
+      if (scrollY < heroBottom - windowHeight / 1.5) {
+        // Star points to hero action button
+        targetElement = heroActionButton;
+      } else if (scrollY < projectsTop - windowHeight / 1.5) {
+        // Star points to scroll down button
+        targetElement = scrollDownButton;
       } else {
-        // In Projects section
-        const projectScroll = (scrollY - windowHeight) / (docHeight - windowHeight);
-        const top = 70 - projectScroll * 60; // Move up
-        const left = 20 + projectScroll * -10; // Move left
-        const scale = 1.5 - projectScroll * 1; // Shrink
-        const rotation = 90 + projectScroll * 270; // Continue rotating
-        star.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
-        star.style.top = `${top}%`;
-        star.style.left = `${left}%`;
-        star.style.opacity = `${1 - projectScroll * 2}`;
+        // Star points to first project card
+        targetElement = projectCard1;
+      }
+
+      if (targetElement) {
+        const rect = targetElement.getBoundingClientRect();
+        const top = rect.top + window.scrollY + rect.height / 2;
+        const left = rect.left + window.scrollX + rect.width / 2;
+        
+        const isProjectCard = targetElement.id.includes('project-card');
+
+        setStyles({
+          top: `${top}px`,
+          left: `${left + (isProjectCard ? -40 : 40)}px`,
+          transform: `translate(-50%, -50%) scale(1.5) rotate(${scrollY / 5}deg)`,
+          opacity: '1',
+        });
+      } else {
+         // Fallback position if no target is found
+         const scrollPercent = scrollY / (docHeight - windowHeight);
+         const top = 50 + scrollPercent * 20;
+         const left = 50 - scrollPercent * 20;
+         setStyles({
+           top: `${top}%`,
+           left: `${left}%`,
+           transform: `translate(-50%, -50%) scale(1) rotate(${scrollY / 5}deg)`,
+           opacity: '0.8'
+         });
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); 
+    // Run on mount to set initial position
+    setTimeout(handleScroll, 100);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -53,15 +76,15 @@ const ScrollingStar = () => {
   return (
     <div
       ref={starRef}
-      className="pointer-events-none fixed z-50 transition-all duration-500 ease-out"
-      style={{ top: '10%', left: '50%', transform: 'translate(-50%, -50%)' }}
+      className="pointer-events-none fixed z-50 transition-all duration-1000 ease-out"
+      style={styles}
     >
       <svg
-        width="48"
-        height="48"
+        width="32"
+        height="32"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="text-primary slow-spin"
+        className="text-primary"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/>

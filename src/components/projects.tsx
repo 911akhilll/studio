@@ -22,7 +22,7 @@ const Projects = () => {
         </div>
         
         <div className="md:col-span-7 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className='animate-on-scroll' style={{ animationDelay: '200ms' }}>
+            <div id="project-card-1" className='animate-on-scroll' style={{ animationDelay: '200ms' }}>
                 {projects.map((project, index) => (
                     <div key={index} className="bg-card border border-border p-6 rounded-lg relative group overflow-hidden">
                         <Image src={project.image} alt={project.title} width={400} height={300} className="rounded-md w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 grayscale" data-ai-hint={project.hint} />
@@ -54,7 +54,7 @@ const Projects = () => {
             </div>
         </div>
 
-        <div className="absolute right-8 bottom-8 md:right-16 md:bottom-16 flex flex-col items-center space-y-4 animate-on-scroll">
+        <div id="scroll-down-button" className="absolute right-8 bottom-8 md:right-16 md:bottom-16 flex flex-col items-center space-y-4 animate-on-scroll">
             <Button variant="outline" size="icon" className="rounded-full border-2 h-14 w-14 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors">
                 <ArrowDown />
             </Button>
