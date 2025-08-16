@@ -12,7 +12,7 @@ const Header = () => {
             <a href="#info" className="hover:text-primary transition-colors">ABOUT</a>
             <a href="#info" className="hover:text-primary transition-colors">CONTACT</a>
           </nav>
-          <Button variant="secondary" className="rounded-full shadow-md hover:shadow-green-500/50 animate-pulse-text">
+          <Button variant="secondary" className="rounded-full shadow-md hover:shadow-orange-500/50 animate-pulse-text">
             GET IN TOUCH
           </Button>
         </div>
