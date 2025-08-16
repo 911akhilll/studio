@@ -7,7 +7,7 @@ const Hero = () => {
     <section id="hero" className="relative bg-primary text-primary-foreground py-24 sm:py-32 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-5xl md:text-8xl font-black leading-none tracking-tighter uppercase">
-                Priyatam Behera
+                Hyrexverse
             </h1>
             <p className="mt-4 text-xl md:text-2xl font-bold text-black">
                 Website Developer | Graphic Designer | Influencer | YouTuber

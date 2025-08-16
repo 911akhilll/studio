@@ -1,51 +1,23 @@
 import React from 'react';
-import { Card, CardContent, CardHeader } from './ui/card';
-import StaticImage from './static-image';
-
-const projects = [
-  {
-    title: 'Project One',
-    description: 'A brief description of the first project.',
-    image: 'https://placehold.co/600x400.png',
-    hint: 'web design',
-  },
-  {
-    title: 'Project Two',
-    description: 'A brief description of the second project.',
-    image: 'https://placehold.co/600x400.png',
-    hint: 'graphic design',
-  },
-  {
-    title: 'Project Three',
-    description: 'A brief description of the third project.',
-    image: 'https://placehold.co/600x400.png',
-    hint: 'youtube thumbnail',
-  },
-  {
-    title: 'Project Four',
-    description: 'A brief description of the fourth project.',
-    image: 'https://placehold.co/600x400.png',
-    hint: 'social media',
-  },
-];
+import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
 
 const Portfolio = () => {
   return (
     <section id="portfolio" className="py-24 sm:py-32 bg-secondary text-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-center mb-12">My Work</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <Card key={index} className="bg-white border-2 border-black rounded-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 shadow-[8px_8px_0px_rgba(0,0,0,1)]">
-              <div className="relative h-60">
-                <StaticImage src={project.image} alt={project.title} data-ai-hint={project.hint} layout="fill" objectFit="cover" className="group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-2xl font-bold">{project.title}</h3>
-                <p className="mt-2 text-black/80">{project.description}</p>
+        <div className="max-w-3xl mx-auto">
+            <Card className="bg-white border-2 border-black rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] text-center">
+              <CardContent className="p-8 md:p-12">
+                <p className="text-2xl md:text-3xl font-bold text-black/90">
+                    I'm providing valuable information about how to grow your youtube channel and Become a successful youtuber.
+                </p>
+                <Button asChild size="lg" className="mt-8 bg-black text-white rounded-lg shadow-lg hover:bg-black/80 transition-all transform hover:scale-105">
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">Let's Do It</a>
+                </Button>
               </CardContent>
             </Card>
-          ))}
         </div>
       </div>
     </section>
