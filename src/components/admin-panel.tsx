@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from "@/hooks/use-toast";
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 
 const AdminPanel = () => {
   const { 
@@ -20,6 +21,8 @@ const AdminPanel = () => {
     primaryColor, setPrimaryColor,
     secondaryColor, setSecondaryColor,
     backgroundColor, setBackgroundColor,
+    textColor, setTextColor,
+    useAnimation, setUseAnimation,
   } = useAdmin();
 
   const [password, setPassword] = useState('');
@@ -38,6 +41,17 @@ const AdminPanel = () => {
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
   }
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -78,26 +92,36 @@ const AdminPanel = () => {
                   <Textarea id="aboutText" value={aboutText} onChange={(e) => setAboutText(e.target.value)} rows={5} />
                 </div>
                 <div>
-                  <Label htmlFor="profileImage">Profile Image URL</Label>
-                  <Input id="profileImage" value={profileImage} onChange={(e) => setProfileImage(e.target.value)} />
+                  <Label htmlFor="profileImage">Profile Image</Label>
+                  <Input id="profileImage" type="file" accept="image/*" onChange={handleImageUpload} />
+                  <p className="text-xs text-muted-foreground mt-1">Or paste an image URL below:</p>
+                  <Input value={profileImage} onChange={(e) => setProfileImage(e.target.value)} placeholder="Image URL" />
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-2">Edit Site Colors (HSL format)</h3>
+              <h3 className="text-lg font-semibold mb-2">Edit Site Styles</h3>
               <div className="space-y-4">
-                <div>
-                  <Label htmlFor="primaryColor">Primary Color (e.g., 346.8 77.2% 49.8%)</Label>
+                 <div>
+                  <Label htmlFor="primaryColor">Primary Color (HSL)</Label>
                   <Input id="primaryColor" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
                 </div>
                 <div>
-                  <Label htmlFor="secondaryColor">Secondary Color (e.g., 48 96.5% 53.1%)</Label>
+                  <Label htmlFor="secondaryColor">Secondary Color (HSL)</Label>
                   <Input id="secondaryColor" value={secondaryColor} onChange={(e) => setSecondaryColor(e.target.value)} />
                 </div>
                 <div>
-                  <Label htmlFor="backgroundColor">Background Color (e.g., 240 10% 3.9%)</Label>
+                  <Label htmlFor="backgroundColor">Background Color (HSL)</Label>
                   <Input id="backgroundColor" value={backgroundColor} onChange={(e) => setBackgroundColor(e.target.value)} />
+                </div>
+                 <div>
+                  <Label htmlFor="textColor">Text Color (HSL)</Label>
+                  <Input id="textColor" value={textColor} onChange={(e) => setTextColor(e.target.value)} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="useAnimation">Enable Fade-in Animation</Label>
+                  <Switch id="useAnimation" checked={useAnimation} onCheckedChange={setUseAnimation} />
                 </div>
               </div>
             </div>

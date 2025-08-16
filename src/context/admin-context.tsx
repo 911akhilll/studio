@@ -21,6 +21,10 @@ interface AdminContextType {
   setSecondaryColor: (color: string) => void;
   backgroundColor: string;
   setBackgroundColor: (color: string) => void;
+  textColor: string;
+  setTextColor: (color: string) => void;
+  useAnimation: boolean;
+  setUseAnimation: (use: boolean) => void;
 }
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
@@ -33,20 +37,25 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
   const [heroTitle, setHeroTitle] = useState('Hyrexverse');
   const [heroSubtitle, setHeroSubtitle] = useState("I'm a YouTube content creator. Join me now!");
   const [aboutText, setAboutText] = useState("I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!");
-  const [profileImage, setProfileImage] = useState('/images/profileimg.png');
+  const [profileImage, setProfileImage] = useState('https://placehold.co/450x300.png');
 
   // Default color states (from globals.css)
   const [primaryColor, setPrimaryColor] = useState('346.8 77.2% 49.8%');
   const [secondaryColor, setSecondaryColor] = useState('48 96.5% 53.1%');
   const [backgroundColor, setBackgroundColor] = useState('240 10% 3.9%');
+  const [textColor, setTextColor] = useState('0 0% 98%');
+  
+  // Animation state
+  const [useAnimation, setUseAnimation] = useState(true);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       document.documentElement.style.setProperty('--primary', primaryColor);
       document.documentElement.style.setProperty('--secondary', secondaryColor);
       document.documentElement.style.setProperty('--background', backgroundColor);
+      document.documentElement.style.setProperty('--foreground', textColor);
     }
-  }, [primaryColor, secondaryColor, backgroundColor]);
+  }, [primaryColor, secondaryColor, backgroundColor, textColor]);
 
 
   return (
@@ -59,7 +68,9 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
       profileImage, setProfileImage,
       primaryColor, setPrimaryColor,
       secondaryColor, setSecondaryColor,
-      backgroundColor, setBackgroundColor
+      backgroundColor, setBackgroundColor,
+      textColor, setTextColor,
+      useAnimation, setUseAnimation,
     }}>
       {children}
     </AdminContext.Provider>
