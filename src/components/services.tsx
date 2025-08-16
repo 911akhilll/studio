@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Youtube, Send, Users } from 'lucide-react';
+import { Youtube, Instagram, Send } from 'lucide-react';
+import SocialButtons from './social-buttons';
 
 const services = [
     {
@@ -9,7 +10,7 @@ const services = [
         description: "Content and strategies to grow your YouTube channel and become a successful creator."
     },
     {
-        icon: <Users className="w-10 h-10 text-black" />,
+        icon: <Instagram className="w-10 h-10 text-black" />,
         title: "Instagram",
         description: "Leveraging Instagram to build your brand, engage your audience, and drive growth."
     },
@@ -39,6 +40,9 @@ const Services = () => {
                     </CardContent>
                 </Card>
             ))}
+        </div>
+        <div className="text-center mt-12">
+            <SocialButtons />
         </div>
       </div>
     </section>

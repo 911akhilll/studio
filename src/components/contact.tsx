@@ -4,6 +4,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Mail } from 'lucide-react';
+import SocialButtons from './social-buttons';
 
 const Contact = () => {
   return (
@@ -35,6 +36,9 @@ const Contact = () => {
                     </form>
                 </CardContent>
             </Card>
+            <div className="text-center mt-12">
+                <SocialButtons />
+            </div>
         </div>
       </div>
     </section>

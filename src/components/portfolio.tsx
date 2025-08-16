@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
+import SocialButtons from './social-buttons';
 
 const Portfolio = () => {
   return (
@@ -18,6 +19,9 @@ const Portfolio = () => {
                 </Button>
               </CardContent>
             </Card>
+            <div className="text-center mt-12">
+                <SocialButtons />
+            </div>
         </div>
       </div>
     </section>

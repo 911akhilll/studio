@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from './ui/button';
-import StaticImage from './static-image';
+import { Youtube, Instagram, Send } from 'lucide-react';
+import SocialButtons from './social-buttons';
 
 const Hero = () => {
   return (
@@ -10,18 +11,10 @@ const Hero = () => {
                 Hyrexverse
             </h1>
             <p className="mt-4 text-xl md:text-2xl font-bold text-black">
-                Website Developer | Graphic Designer | Influencer | YouTuber
+                I'm a YouTube content creator. Join me now!
             </p>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-primary-foreground/80">
-                Crafting digital experiences that inspire, engage, and convert. A design subscription so good it should be illegal.
-            </p>
-            <div className="mt-8 flex gap-4 justify-center">
-                <Button asChild size="lg" className="bg-black text-white rounded-lg shadow-lg hover:bg-black/80 transition-all transform hover:scale-105">
-                    <a href="#contact">Get In Touch</a>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="text-black border-black rounded-lg shadow-lg hover:bg-black/10 transition-all transform hover:scale-105">
-                    <a href="#portfolio">View Work</a>
-                </Button>
+            <div className="mt-8">
+              <SocialButtons />
             </div>
         </div>
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute bottom-0 left-0 w-full fill-secondary -mb-px">
