@@ -63,7 +63,7 @@
   }
 
   .fade-in-up {
-    animation: fadeInUp 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards;
+    animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
     opacity: 0;
   }
   
@@ -83,7 +83,7 @@
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(60px);
     }
     to {
       opacity: 1;
