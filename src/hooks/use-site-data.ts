@@ -27,12 +27,14 @@ const initialSettings = {
     contactEmail: '911priyatambehera@gmail.com',
 };
 
-type SiteSettings = Omit<SiteData, 'reviews' | 'videos'>;
+const initialSiteData: SiteData = {
+    ...initialSettings,
+    reviews: [],
+    videos: [],
+}
 
 export const useSiteData = () => {
-  const [settings, setSettings] = useState<SiteSettings>(initialSettings);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [siteData, setSiteData] = useState<SiteData>(initialSiteData);
   const [loading, setLoading] = useState(true);
 
   // Effect for main site settings
@@ -41,22 +43,23 @@ export const useSiteData = () => {
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setSettings({
+        setSiteData(prev => ({
+          ...prev,
           heroTitle: data.heroTitle || initialSettings.heroTitle,
           heroSubtitle: data.heroSubtitle || initialSettings.heroSubtitle,
           aboutText: data.aboutText || initialSettings.aboutText,
           contactEmail: data.contactEmail || initialSettings.contactEmail,
           profileImage: data.profileImage || initialSettings.profileImage,
-        });
+        }));
       } else {
-        // If the document doesn't exist, create it with initial settings.
         setDoc(docRef, initialSettings).catch(err => console.error("Error creating initial settings:", err));
+         setSiteData(prev => ({ ...prev, ...initialSettings }));
       }
       setLoading(false);
     }, (error) => {
       console.error("Error fetching site settings:", error);
+      setSiteData(prev => ({ ...prev, ...initialSettings }));
       setLoading(false);
-      setSettings(initialSettings);
     });
 
     return () => unsubscribe();
@@ -77,10 +80,10 @@ export const useSiteData = () => {
           createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate() : new Date(),
         } as Review;
       });
-      setReviews(fetchedReviews);
+      setSiteData(prev => ({...prev, reviews: fetchedReviews}));
     }, (error) => {
       console.error("Error fetching reviews:", error);
-      setReviews([]);
+      setSiteData(prev => ({...prev, reviews: []}));
     });
 
     return () => unsubscribe();
@@ -96,16 +99,16 @@ export const useSiteData = () => {
             id: doc.id,
             ...doc.data()
         } as YouTubeVideo));
-        setVideos(fetchedVideos);
+        setSiteData(prev => ({...prev, videos: fetchedVideos}));
     }, (error) => {
         console.error("Error fetching videos:", error);
-        setVideos([]);
+        setSiteData(prev => ({...prev, videos: []}));
     });
 
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = useCallback(async (newData: Partial<SiteSettings>) => {
+  const updateSiteData = useCallback(async (newData: Partial<Omit<SiteData, 'reviews' | 'videos'>>) => {
     const docRef = doc(db, 'site', 'settings');
     try {
       await setDoc(docRef, newData, { merge: true });
@@ -127,7 +130,10 @@ export const useSiteData = () => {
 
   const addReview = useCallback(async (newReview: Omit<Review, 'id'>) => {
     try {
-      await addDoc(collection(db, 'site', 'settings', 'reviews'), newReview);
+      await addDoc(collection(db, 'site', 'settings', 'reviews'), {
+          ...newReview,
+          createdAt: Timestamp.fromDate(newReview.createdAt)
+      });
     } catch (error) {
       console.error("Error adding review: ", error);
     }
@@ -156,12 +162,6 @@ export const useSiteData = () => {
       console.error("Error deleting video: ", error);
     }
   }, []);
-
-  const siteData: SiteData = {
-      ...settings,
-      reviews,
-      videos,
-  }
 
   return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, uploadProfileImage };
 };
