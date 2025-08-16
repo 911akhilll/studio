@@ -61,10 +61,10 @@ const PageContent = () => {
         <div ref={(el) => (sectionsRef.current[0] = el)}>
           <About />
         </div>
-        <div ref={(el) => (sections.current[1] = el)}>
+        <div ref={(el) => (sectionsRef.current[1] = el)}>
           <Services />
         </div>
-        <div ref={(el) => (sections.current[2] = el)}>
+        <div ref={(el) => (sectionsRef.current[2] = el)}>
           <Portfolio />
         </div>
         <Contact />
