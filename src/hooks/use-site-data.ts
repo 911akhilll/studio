@@ -27,14 +27,8 @@ const initialSettings = {
     contactEmail: '911priyatambehera@gmail.com',
 };
 
-const initialSiteData: SiteData = {
-    ...initialSettings,
-    reviews: [],
-    videos: [],
-}
-
 export const useSiteData = () => {
-  const [siteData, setSiteData] = useState<SiteData>(initialSiteData);
+  const [siteData, setSiteData] = useState<SiteData>({ ...initialSettings, reviews: [], videos: [] });
   const [loading, setLoading] = useState(true);
 
   // Effect for main site settings
@@ -43,7 +37,7 @@ export const useSiteData = () => {
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setSiteData(prev => ({
+         setSiteData(prev => ({
           ...prev,
           heroTitle: data.heroTitle || initialSettings.heroTitle,
           heroSubtitle: data.heroSubtitle || initialSettings.heroSubtitle,
@@ -52,7 +46,7 @@ export const useSiteData = () => {
           profileImage: data.profileImage || initialSettings.profileImage,
         }));
       } else {
-        setDoc(docRef, initialSettings).catch(err => console.error("Error creating initial settings:", err));
+         setDoc(docRef, initialSettings).catch(err => console.error("Error creating initial settings:", err));
          setSiteData(prev => ({ ...prev, ...initialSettings }));
       }
       setLoading(false);
@@ -83,7 +77,7 @@ export const useSiteData = () => {
       setSiteData(prev => ({...prev, reviews: fetchedReviews}));
     }, (error) => {
       console.error("Error fetching reviews:", error);
-      setSiteData(prev => ({...prev, reviews: []}));
+       setSiteData(prev => ({...prev, reviews: []}));
     });
 
     return () => unsubscribe();
