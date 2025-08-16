@@ -86,7 +86,7 @@ const Contact = () => {
                       <FormItem>
                         <FormLabel className="sr-only">Your Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your Name" {...field} className="bg-white border-black focus:ring-primary" />
+                          <Input placeholder="Your Name" {...field} className="bg-white border-black focus:ring-primary text-black" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -99,7 +99,7 @@ const Contact = () => {
                       <FormItem>
                         <FormLabel className="sr-only">Your Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="Your Email" {...field} className="bg-white border-black focus:ring-primary" />
+                          <Input type="email" placeholder="Your Email" {...field} className="bg-white border-black focus:ring-primary text-black" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -112,7 +112,7 @@ const Contact = () => {
                       <FormItem>
                         <FormLabel className="sr-only">Your Message</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Your Message" {...field} className="bg-white border-black focus:ring-primary" />
+                          <Textarea placeholder="Your Message" {...field} className="bg-white border-black focus:ring-primary text-black" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
