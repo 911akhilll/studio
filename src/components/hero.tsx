@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col justify-center items-center text-center text-foreground pt-24">
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center items-center text-center text-foreground pt-24 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h1 
             className="text-6xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tighter" 

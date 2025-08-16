@@ -75,7 +75,7 @@
   }
 
   .project-card {
-    transform: perspective(1000px) rotateY(0) rotateX(0);
+    transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -84,6 +84,6 @@
   }
 
   .project-card:hover .project-card-image {
-    transform: scale(1.05);
+    transform: scale(1.05) translateZ(20px);
   }
 }
