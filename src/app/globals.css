@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%; /* Deep Navy Blue */
+    --background: 240 4% 12%; /* Dark Gray */
     --foreground: 0 0% 100%; /* Pure White */
-    --card: 222 47% 11%;
+    --card: 240 4% 12%;
     --card-foreground: 0 0% 100%;
-    --popover: 222 47% 11%;
+    --popover: 240 4% 12%;
     --popover-foreground: 0 0% 100%;
     --primary: 0 100% 50%; /* Pure Red */
     --primary-foreground: 0 0% 100%;
@@ -27,11 +27,11 @@
   }
  
   .dark {
-    --background: 222 47% 11%;
+    --background: 240 4% 12%;
     --foreground: 0 0% 100%;
-    --card: 222 47% 11%;
+    --card: 240 4% 12%;
     --card-foreground: 0 0% 100%;
-    --popover: 222 47% 11%;
+    --popover: 240 4% 12%;
     --popover-foreground: 0 0% 100%;
     --primary: 0 100% 50%;
     --primary-foreground: 0 0% 100%;
@@ -85,5 +85,18 @@
 
   .project-card:hover .project-card-image {
     transform: scale(1.05) translateZ(20px);
+  }
+
+  @keyframes pulse-text {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  .animate-pulse-text {
+    animation: pulse-text 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }
