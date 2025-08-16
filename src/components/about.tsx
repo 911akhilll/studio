@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { useSiteDataContext } from '@/contexts/site-data-context';
-import Image from 'next/image';
 
 const About = () => {
   const { siteData } = useSiteDataContext();
@@ -18,12 +17,11 @@ const About = () => {
             <div className="order-1 md:order-2">
                 {siteData.profileImage && (
                   <div className="relative w-full h-80">
-                    <Image 
+                    <img 
                         src={siteData.profileImage}
                         alt="Profile image"
                         data-ai-hint="profile"
-                        layout="fill"
-                        className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] object-cover"
+                        className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] object-cover w-full h-full"
                     />
                   </div>
                 )}
