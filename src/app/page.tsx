@@ -1,34 +1,14 @@
 'use client';
-import { useEffect } from 'react';
 import Header from '@/components/header';
 import Hero from '@/components/hero';
 import Projects from '@/components/projects';
 import Footer from '@/components/footer';
-import ScrollingStar from '@/components/scrolling-star';
+import AnimatedBackground from '@/components/animated-background';
 
 export default function Home() {
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in-up');
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    const elements = document.querySelectorAll('.animate-on-scroll');
-    elements.forEach(el => observer.observe(el));
-
-    return () => elements.forEach(el => observer.unobserve(el));
-  }, []);
-
   return (
-    <div className="bg-background min-h-screen text-foreground overflow-x-hidden">
-      <ScrollingStar />
+    <div className="bg-background min-h-screen text-foreground isolate">
+      <AnimatedBackground />
       <Header />
       <main>
         <Hero />

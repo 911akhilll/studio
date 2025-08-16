@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 0%; /* Pure Black */
+    --foreground: 0 0% 100%; /* Pure White */
     --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 0%;
     --popover-foreground: 0 0% 100%;
-    --primary: 0 100% 50%;
+    --primary: 0 100% 50%; /* Pure Red */
     --primary-foreground: 0 0% 100%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -58,32 +58,15 @@
     scroll-behavior: smooth;
   }
 
-  .fade-in {
-    animation: fadeIn 1.5s ease-in-out forwards;
-  }
-
   .fade-in-up {
-    animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation: fadeInUp 1s ease-out forwards;
     opacity: 0;
   }
   
-  .slow-spin {
-    animation: spin 20s linear infinite;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(60px);
+      transform: translateY(40px);
     }
     to {
       opacity: 1;
@@ -91,12 +74,16 @@
     }
   }
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  .project-card {
+    transform: perspective(1000px) rotateY(0) rotateX(0);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-card-image {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-card:hover .project-card-image {
+    transform: scale(1.05);
   }
 }

@@ -1,28 +1,29 @@
 import React from 'react';
+import { Button } from './ui/button';
+import { ArrowUp } from 'lucide-react';
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-foreground border-t mt-24">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="md:col-span-2">
-          <h2 className="text-4xl font-bold font-display">911akhil</h2>
+    <footer className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-foreground relative">
+      <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="text-center md:text-left mb-4 md:mb-0">
+          <p className="font-bold text-lg">911akhil</p>
+          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} All Rights Reserved.</p>
         </div>
-        <div>
-          <h3 className="font-semibold">911akhil News</h3>
-          <p className="text-sm text-muted-foreground mt-2">Latest collections</p>
+        <div className="flex items-center space-x-6">
+           <a href="#" className="text-sm hover:text-primary transition-colors">Instagram</a>
+           <a href="#" className="text-sm hover:text-primary transition-colors">Twitter</a>
+           <a href="#" className="text-sm hover:text-primary transition-colors">LinkedIn</a>
         </div>
-        <div>
-          <h3 className="font-semibold">Social</h3>
-          <div className="flex space-x-4 mt-2">
-            <a href="#" className="text-sm hover:text-primary transition-colors">Instagram</a>
-            <a href="#" className="text-sm hover:text-primary transition-colors">Twitter</a>
-            <a href="#" className="text-sm hover:text-primary transition-colors">Facebook</a>
-          </div>
+        <div className="hidden md:block">
+            <Button variant="ghost" size="icon" onClick={scrollToTop} aria-label="Scroll to top">
+                <ArrowUp />
+            </Button>
         </div>
-      </div>
-      <div className="mt-8 border-t border-border pt-8 flex justify-between text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} 911akhil. All Rights Reserved.</p>
-        <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
       </div>
     </footer>
   );

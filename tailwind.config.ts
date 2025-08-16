@@ -18,7 +18,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['Archivo', 'sans-serif'],
+        display: ['Anton', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',

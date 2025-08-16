@@ -1,27 +1,21 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { Menu, ChevronDown } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/50">
+    <header className="fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex items-center space-x-8">
-            <a href="#" className="text-3xl font-bold font-display text-primary">911akhil</a>
-            <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-              <a href="#projects" className="hover:text-primary transition-colors">PROJECTS</a>
-              <a href="#" className="hover:text-primary transition-colors">SHOP</a>
-              <a href="#" className="flex items-center hover:text-primary transition-colors">
-                NEW ARRIVALS <ChevronDown className="w-4 h-4 ml-1" />
-              </a>
-            </nav>
-          </div>
-          <div className="flex items-center">
-            <Button variant="ghost" size="icon" className="hover:bg-primary/10 text-primary">
-              <Menu className="w-6 h-6" />
-            </Button>
-          </div>
+        <div className="flex items-center justify-between h-24 border-b border-border/50">
+          <a href="#" className="text-2xl font-bold" style={{ fontFamily: "'Anton', sans-serif" }}>911AKHIL</a>
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
+            <a href="#projects" className="hover:text-primary transition-colors">WORK</a>
+            <a href="#" className="hover:text-primary transition-colors">ABOUT</a>
+            <a href="#" className="hover:text-primary transition-colors">CONTACT</a>
+          </nav>
+          <Button variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+            GET IN TOUCH
+          </Button>
         </div>
       </div>
     </header>
