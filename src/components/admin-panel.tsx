@@ -16,6 +16,10 @@ const AdminPanel = () => {
     heroTitle, setHeroTitle,
     heroSubtitle, setHeroSubtitle,
     aboutText, setAboutText,
+    profileImage, setProfileImage,
+    primaryColor, setPrimaryColor,
+    secondaryColor, setSecondaryColor,
+    backgroundColor, setBackgroundColor,
   } = useAdmin();
 
   const [password, setPassword] = useState('');
@@ -72,6 +76,28 @@ const AdminPanel = () => {
                 <div>
                   <Label htmlFor="aboutText">About Section Text</Label>
                   <Textarea id="aboutText" value={aboutText} onChange={(e) => setAboutText(e.target.value)} rows={5} />
+                </div>
+                <div>
+                  <Label htmlFor="profileImage">Profile Image URL</Label>
+                  <Input id="profileImage" value={profileImage} onChange={(e) => setProfileImage(e.target.value)} />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Edit Site Colors (HSL format)</h3>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="primaryColor">Primary Color (e.g., 346.8 77.2% 49.8%)</Label>
+                  <Input id="primaryColor" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
+                </div>
+                <div>
+                  <Label htmlFor="secondaryColor">Secondary Color (e.g., 48 96.5% 53.1%)</Label>
+                  <Input id="secondaryColor" value={secondaryColor} onChange={(e) => setSecondaryColor(e.target.value)} />
+                </div>
+                <div>
+                  <Label htmlFor="backgroundColor">Background Color (e.g., 240 10% 3.9%)</Label>
+                  <Input id="backgroundColor" value={backgroundColor} onChange={(e) => setBackgroundColor(e.target.value)} />
                 </div>
               </div>
             </div>
