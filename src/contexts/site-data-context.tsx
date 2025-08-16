@@ -8,6 +8,7 @@ export interface SiteData {
   heroSubtitle: string;
   aboutText: string;
   profileImage: string;
+  contactEmail: string;
 }
 
 interface SiteDataContextType {

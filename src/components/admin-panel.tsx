@@ -47,6 +47,10 @@ const AdminPanel = () => {
                         <label htmlFor="aboutText" className="text-sm font-medium">About Text</label>
                         <Textarea id="aboutText" name="aboutText" value={formData.aboutText} onChange={handleInputChange} rows={5} />
                     </div>
+                    <div>
+                        <label htmlFor="contactEmail" className="text-sm font-medium">Contact Email</label>
+                        <Input id="contactEmail" name="contactEmail" value={formData.contactEmail} onChange={handleInputChange} />
+                    </div>
                 </div>
                 <DialogFooter>
                     <Button variant="outline" onClick={() => setAdminPanelOpen(false)}>Cancel</Button>
