@@ -2,28 +2,19 @@
 import React from 'react';
 import SocialButtons from './social-buttons';
 import { useSiteDataContext } from '@/contexts/site-data-context';
-import { Skeleton } from './ui/skeleton';
 
 const Hero = () => {
-  const { siteData, loading } = useSiteDataContext();
+  const { siteData } = useSiteDataContext();
 
   return (
     <section id="hero" className="relative bg-primary text-primary-foreground py-24 sm:py-32 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            {loading ? (
-              <Skeleton className="h-14 w-3/4 mx-auto" />
-            ) : (
-              <h1 className="text-5xl md:text-8xl font-black leading-none tracking-tighter uppercase">
-                  {siteData.heroTitle}
-              </h1>
-            )}
-            {loading ? (
-               <Skeleton className="h-8 w-1/2 mx-auto mt-4" />
-            ) : (
-              <p className="mt-4 text-xl md:text-2xl font-bold text-black">
-                  {siteData.heroSubtitle}
-              </p>
-            )}
+            <h1 className="text-5xl md:text-8xl font-black leading-none tracking-tighter uppercase">
+                {siteData.heroTitle}
+            </h1>
+            <p className="mt-4 text-xl md:text-2xl font-bold text-black">
+                {siteData.heroSubtitle}
+            </p>
             <div className="mt-8">
               <SocialButtons />
             </div>

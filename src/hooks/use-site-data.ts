@@ -10,7 +10,7 @@ const initialData: SiteData = {
     heroTitle: 'Hyrexverse',
     heroSubtitle: "I'm a YouTube content creator. Join me now!",
     aboutText: "I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!",
-    profileImage: 'https://i.ibb.co/1MjMkxP/Whats-App-Image-2024-06-25-at-12-14-11-AM.jpg',
+    profileImage: 'https://i.ibb.co/68S5gH3/image.png',
 };
 
 export const useSiteData = () => {

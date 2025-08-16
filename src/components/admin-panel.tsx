@@ -15,14 +15,9 @@ const isValidImageUrl = (url: string) => {
     if (url.startsWith('blob:')) {
         return true;
     }
-    // Check for http/https and a basic structure.
-    try {
-        new URL(url);
-        // Ensure it looks like an image file
-        return /\.(jpeg|jpg|gif|png|webp)$/i.test(url);
-    } catch (e) {
-        return false;
-    }
+    // Basic check for http/https and common image extensions.
+    // This is not foolproof but prevents most common errors.
+    return /^https?:\/\/.+\.(jpeg|jpg|gif|png|webp)$/i.test(url);
 }
 
 const AdminPanel = () => {
@@ -113,11 +108,6 @@ const AdminPanel = () => {
                             <div className="relative w-20 h-20">
                                 {isValidImageUrl(previewImage || '') && (
                                     <Image src={previewImage!} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
-                                )}
-                                {(isUploading || isSaving) && (
-                                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-md">
-                                        <Loader2 className="h-6 w-6 animate-spin text-white" />
-                                    </div>
                                 )}
                             </div>
                             <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
