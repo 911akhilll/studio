@@ -10,7 +10,7 @@ const initialData: SiteData = {
     heroTitle: 'Hyrexverse',
     heroSubtitle: "I'm a YouTube content creator. Join me now!",
     aboutText: "I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!",
-    profileImage: 'https://placehold.co/450x300.png',
+    profileImage: 'https://i.ibb.co/1MjMkxP/Whats-App-Image-2024-06-25-at-12-14-11-AM.jpg',
 };
 
 export const useSiteData = () => {
@@ -41,7 +41,7 @@ export const useSiteData = () => {
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = async (newData: Partial<SiteData>, imageFile?: File | null) => {
+  const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage'>> & { profileImage?: string }, imageFile?: File | null) => {
     const docRef = doc(db, 'site', 'settings');
     
     // Create a temporary object to hold all updates, starting with text fields
