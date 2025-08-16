@@ -4,7 +4,7 @@ import Header from '@/components/header';
 import Hero from '@/components/hero';
 import Projects from '@/components/projects';
 import Footer from '@/components/footer';
-import StarFollower from '@/components/star-follower';
+import ScrollingStar from '@/components/scrolling-star';
 
 export default function Home() {
 
@@ -16,7 +16,8 @@ export default function Home() {
         }
       });
     }, {
-      threshold: 0.1,
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
     });
 
     const elements = document.querySelectorAll('.animate-on-scroll');
@@ -27,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="bg-background min-h-screen text-foreground">
-      <StarFollower />
+      <ScrollingStar />
       <Header />
       <main>
         <Hero />
