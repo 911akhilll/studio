@@ -2,8 +2,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { doc, onSnapshot, setDoc, collection, addDoc, query, orderBy, deleteDoc, Timestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, storage } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import type { SiteData } from '@/contexts/site-data-context';
 
 export interface Review {
@@ -46,7 +45,7 @@ export const useSiteData = () => {
           profileImage: data.profileImage || initialSettings.profileImage,
         }));
       } else {
-         setDoc(docRef, initialSettings).catch(err => console.error("Error creating initial settings:", err));
+         setDoc(docRef, initialSettings, { merge: true }).catch(err => console.error("Error creating initial settings:", err));
          setSiteData(prev => ({ ...prev, ...initialSettings }));
       }
       setLoading(false);
@@ -105,22 +104,13 @@ export const useSiteData = () => {
   const updateSiteData = useCallback(async (newData: Partial<Omit<SiteData, 'reviews' | 'videos'>>) => {
     const docRef = doc(db, 'site', 'settings');
     try {
-      await setDoc(docRef, newData, { merge: true });
+      // Ensure profileImage is not part of the update
+      const { profileImage, ...dataToUpdate } = newData;
+      await setDoc(docRef, dataToUpdate, { merge: true });
     } catch (error) {
       console.error("Error updating site data: ", error);
     }
   }, []);
-  
-  const uploadProfileImage = useCallback(async (file: File) => {
-    const storageRef = ref(storage, `profileImages/profile-image`);
-    try {
-        await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(storageRef);
-        await updateSiteData({ profileImage: downloadURL });
-    } catch (error) {
-        console.error("Error uploading image: ", error);
-    }
-  }, [updateSiteData]);
 
   const addReview = useCallback(async (newReview: Omit<Review, 'id'>) => {
     try {
@@ -157,5 +147,5 @@ export const useSiteData = () => {
     }
   }, []);
 
-  return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, uploadProfileImage };
+  return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo };
 };

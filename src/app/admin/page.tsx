@@ -5,14 +5,13 @@ import { useSiteDataContext, SiteData, SiteDataProvider } from '@/contexts/site-
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Loader2, Star, Home, Trash2, Youtube, MessageSquare, Upload } from 'lucide-react';
+import { Loader2, Star, Home, Trash2, Youtube, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import imageCompression from 'browser-image-compression';
 
 const AdminPageComponent = () => {
-    const { siteData, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, uploadProfileImage, loading } = useSiteDataContext();
+    const { siteData, updateSiteData, addReview, deleteReview, addVideo, deleteVideo, loading } = useSiteDataContext();
     const [formData, setFormData] = useState<SiteData>(siteData);
     const [isSaving, setIsSaving] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,9 +26,6 @@ const AdminPageComponent = () => {
     const [videoUrl, setVideoUrl] = useState('');
     const [isAddingVideo, setIsAddingVideo] = useState(false);
     
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [isUploading, setIsUploading] = useState(false);
-
     const router = useRouter();
     const { toast } = useToast();
 
@@ -120,35 +116,6 @@ const AdminPageComponent = () => {
         }
     };
 
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setIsUploading(true);
-            try {
-                const options = {
-                    maxSizeMB: 0.5, // (max file size in MB)
-                    maxWidthOrHeight: 800, // (max width or height in pixels)
-                    useWebWorker: true,
-                };
-                const compressedFile = await imageCompression(file, options);
-                await uploadProfileImage(compressedFile);
-                toast({
-                    title: "Upload Successful!",
-                    description: "Your new profile image has been saved.",
-                });
-            } catch (error) {
-                console.error("Error processing image:", error);
-                 toast({
-                    title: "Upload Failed",
-                    description: "There was an error uploading your image.",
-                    variant: "destructive",
-                });
-            } finally {
-                setIsUploading(false);
-            }
-        }
-    };
-
     if (!isAuthenticated) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-4">
@@ -220,19 +187,9 @@ const AdminPageComponent = () => {
                         <CardContent className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <img src={siteData.profileImage} alt="Profile" className="w-20 h-20 rounded-full object-cover border-2 border-primary"/>
-                                <div className="flex-grow">
+                                <div>
                                     <label className="text-sm font-medium text-muted-foreground">Profile Picture</label>
-                                    <Input
-                                        type="file"
-                                        accept="image/*"
-                                        ref={fileInputRef}
-                                        onChange={handleImageUpload}
-                                        className="hidden"
-                                    />
-                                    <Button onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="w-full mt-2 bg-secondary text-secondary-foreground hover:bg-secondary/90">
-                                        {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
-                                        {isUploading ? 'Uploading...' : 'Upload New Image'}
-                                    </Button>
+                                    <p className="text-sm text-foreground/80 mt-1">This is permanently set.</p>
                                 </div>
                             </div>
 
