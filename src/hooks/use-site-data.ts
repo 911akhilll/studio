@@ -104,26 +104,46 @@ export const useSiteData = () => {
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => {
+  const updateSiteData = useCallback(async (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => {
     const docRef = doc(db, 'site', 'settings');
-    await setDoc(docRef, newData, { merge: true });
-  };
+    try {
+      await setDoc(docRef, newData, { merge: true });
+    } catch (error) {
+      console.error("Error updating site data: ", error);
+    }
+  }, []);
   
-  const addReview = async (newReview: Omit<Review, 'id'>) => {
-    await addDoc(collection(db, 'site', 'settings', 'reviews'), newReview);
-  };
+  const addReview = useCallback(async (newReview: Omit<Review, 'id'>) => {
+    try {
+      await addDoc(collection(db, 'site', 'settings', 'reviews'), newReview);
+    } catch (error) {
+      console.error("Error adding review: ", error);
+    }
+  }, []);
 
-  const deleteReview = async (reviewId: string) => {
-    await deleteDoc(doc(db, 'site', 'settings', 'reviews', reviewId));
-  }
+  const deleteReview = useCallback(async (reviewId: string) => {
+    try {
+      await deleteDoc(doc(db, 'site', 'settings', 'reviews', reviewId));
+    } catch (error) {
+      console.error("Error deleting review: ", error);
+    }
+  }, []);
 
-  const addVideo = async (newVideo: Omit<YouTubeVideo, 'id'>) => {
-    await addDoc(collection(db, 'site', 'settings', 'videos'), newVideo);
-  }
+  const addVideo = useCallback(async (newVideo: Omit<YouTubeVideo, 'id'>) => {
+    try {
+      await addDoc(collection(db, 'site', 'settings', 'videos'), newVideo);
+    } catch (error) {
+      console.error("Error adding video: ", error);
+    }
+  }, []);
 
-  const deleteVideo = async (videoId: string) => {
-    await deleteDoc(doc(db, 'site', 'settings', 'videos', videoId));
-  }
+  const deleteVideo = useCallback(async (videoId: string) => {
+    try {
+      await deleteDoc(doc(db, 'site', 'settings', 'videos', videoId));
+    } catch (error) {
+      console.error("Error deleting video: ", error);
+    }
+  }, []);
 
   return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo };
 };
