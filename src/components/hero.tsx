@@ -1,17 +1,18 @@
+'use client';
 import React from 'react';
-import { Button } from './ui/button';
-import { Youtube, Instagram, Send } from 'lucide-react';
+import { useAdmin } from '@/context/admin-context';
 import SocialButtons from './social-buttons';
 
 const Hero = () => {
+  const { heroTitle, heroSubtitle } = useAdmin();
   return (
     <section id="hero" className="relative bg-primary text-primary-foreground py-24 sm:py-32 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-5xl md:text-8xl font-black leading-none tracking-tighter uppercase">
-                Hyrexverse
+                {heroTitle}
             </h1>
             <p className="mt-4 text-xl md:text-2xl font-bold text-black">
-                I'm a YouTube content creator. Join me now!
+                {heroSubtitle}
             </p>
             <div className="mt-8">
               <SocialButtons />

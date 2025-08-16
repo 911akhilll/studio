@@ -4,11 +4,20 @@ import React, { useState } from 'react';
 import { useAdmin } from '@/context/admin-context';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from "@/hooks/use-toast";
+import { Label } from '@/components/ui/label';
 
 const AdminPanel = () => {
-  const { isOpen, setOpen, isAuthenticated, setAuthenticated } = useAdmin();
+  const { 
+    isOpen, setOpen, 
+    isAuthenticated, setAuthenticated,
+    heroTitle, setHeroTitle,
+    heroSubtitle, setHeroSubtitle,
+    aboutText, setAboutText,
+  } = useAdmin();
+
   const [password, setPassword] = useState('');
   const { toast } = useToast();
 
@@ -23,18 +32,12 @@ const AdminPanel = () => {
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) {
-        setOpen(false);
-        // Optionally reset authentication state when dialog is closed
-        // setAuthenticated(false);
-    } else {
-        setOpen(true);
-    }
+    setOpen(open);
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{isAuthenticated ? 'Admin Panel' : 'Admin Access'}</DialogTitle>
           <DialogDescription>
@@ -54,8 +57,25 @@ const AdminPanel = () => {
             <Button onClick={handlePasswordSubmit} className="w-full">Login</Button>
           </div>
         ) : (
-          <div className="py-4">
-            <p>Admin features will be shown here.</p>
+          <div className="py-4 space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Edit Site Content</h3>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="heroTitle">Hero Title</Label>
+                  <Input id="heroTitle" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} />
+                </div>
+                <div>
+                  <Label htmlFor="heroSubtitle">Hero Subtitle</Label>
+                  <Input id="heroSubtitle" value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} />
+                </div>
+                <div>
+                  <Label htmlFor="aboutText">About Section Text</Label>
+                  <Textarea id="aboutText" value={aboutText} onChange={(e) => setAboutText(e.target.value)} rows={5} />
+                </div>
+              </div>
+            </div>
+            
             <Button variant="outline" className="mt-4" onClick={() => setAuthenticated(false)}>Logout</Button>
           </div>
         )}
