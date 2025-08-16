@@ -22,7 +22,9 @@ export const useSiteData = () => {
     const docRef = doc(db, 'site', 'settings');
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
-        setSiteData(docSnap.data() as SiteData);
+        const data = docSnap.data() as SiteData;
+        // Ensure profileImage is never null or undefined to prevent errors
+        setSiteData({ ...initialData, ...data, profileImage: data.profileImage || initialData.profileImage });
       } else {
         // If the document doesn't exist, create it with initial data
         setDoc(docRef, initialData).then(() => {
@@ -39,11 +41,18 @@ export const useSiteData = () => {
     return () => unsubscribe();
   }, []);
 
-  const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage'>>, imageFile?: File | null) => {
+  const updateSiteData = async (newData: Partial<SiteData>, imageFile?: File | null) => {
     const docRef = doc(db, 'site', 'settings');
     
-    // Create a temporary object to hold all updates
-    const dataToUpdate: Partial<SiteData> = { ...newData };
+    // Create a temporary object to hold all updates, starting with text fields
+    const dataToUpdate: Partial<Omit<SiteData, 'profileImage'>> = { 
+        heroTitle: newData.heroTitle,
+        heroSubtitle: newData.heroSubtitle,
+        aboutText: newData.aboutText,
+    };
+
+    // First, save the text content immediately for a responsive feel
+    await setDoc(docRef, dataToUpdate, { merge: true });
 
     // Handle image file upload if one is provided
     if (imageFile) {
@@ -57,23 +66,16 @@ export const useSiteData = () => {
             const compressedFile = await imageCompression(imageFile, options);
             const storageRef = ref(storage, `profileImages/${Date.now()}_${compressedFile.name}`);
             await uploadBytes(storageRef, compressedFile);
-            dataToUpdate.profileImage = await getDownloadURL(storageRef);
+            const downloadURL = await getDownloadURL(storageRef);
+            await setDoc(docRef, { profileImage: downloadURL }, { merge: true });
         } catch (error) {
             console.error("Error uploading image: ", error);
-            setIsUploading(false); // Stop loading indicator on error
-            return; // Exit without setting document if upload fails
         } finally {
             setIsUploading(false);
         }
-    } else if (newData.profileImage) {
-        // If a new URL is provided directly in newData, it will be saved.
-        // This handles the URL paste case.
-        dataToUpdate.profileImage = newData.profileImage;
-    }
-
-    // Perform a single write operation with all merged data
-    if (Object.keys(dataToUpdate).length > 0) {
-      await setDoc(docRef, dataToUpdate, { merge: true });
+    } else if (newData.profileImage && newData.profileImage !== siteData.profileImage) {
+        // If a new URL is provided directly and it's different, save it
+        await setDoc(docRef, { profileImage: newData.profileImage }, { merge: true });
     }
   };
 

@@ -8,9 +8,18 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
-// Helper to check for a valid URL format
-const isPotentialUrl = (str: string) => {
-    return str.startsWith('http://') || str.startsWith('https://') || str.startsWith('blob:');
+// Helper to check for a valid URL format that next/image can handle
+const isValidImageUrl = (url: string) => {
+    if (url.startsWith('blob:')) {
+        return true;
+    }
+    try {
+        new URL(url);
+        // Check for common image extensions
+        return /\.(jpeg|jpg|gif|png|webp)$/.test(new URL(url).pathname);
+    } catch (e) {
+        return false;
+    }
 }
 
 const AdminPanel = () => {
@@ -59,7 +68,18 @@ const AdminPanel = () => {
 
     const handleSaveChanges = async () => {
         setIsSaving(true);
-        await updateSiteData(formData, imageFile);
+        // Construct the final data to be saved, ensuring profileImage is correctly handled
+        const finalData = { ...formData };
+        if (imageFile) {
+            // If there's a file, the profileImage URL will be set after upload
+            // We can clear it from the form data to avoid saving a stale URL
+             finalData.profileImage = '';
+        } else {
+            // If no new file, use the URL from the form (which might have been pasted)
+            finalData.profileImage = formData.profileImage;
+        }
+
+        await updateSiteData(finalData, imageFile);
         setIsSaving(false);
         setAdminPanelOpen(false);
         setImageFile(null); // Reset file after upload
@@ -88,7 +108,7 @@ const AdminPanel = () => {
                         <label className="text-sm font-medium">Profile Image</label>
                         <div className="mt-2 flex items-center gap-4">
                             <div className="relative w-20 h-20">
-                                {previewImage && isPotentialUrl(previewImage) && (
+                                {previewImage && isValidImageUrl(previewImage) && (
                                     <Image src={previewImage} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
                                 )}
                                 {(isUploading || isSaving) && (
