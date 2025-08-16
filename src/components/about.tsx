@@ -13,9 +13,9 @@ const About = () => {
             </div>
             <div className="order-1 md:order-2">
                 <StaticImage 
-                    src="https://placehold.co/600x400.png"
-                    alt="Priyatam Behera at workstation"
-                    data-ai-hint="developer designer"
+                    src="/images/_8ef3a7b5-22a4-4a41-860e-b7d1eb290566.png"
+                    alt="Hyrexverse avatar"
+                    data-ai-hint="gaming avatar"
                     width={600}
                     height={400}
                     className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)]"
