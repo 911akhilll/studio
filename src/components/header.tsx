@@ -1,19 +1,22 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { Menu } from 'lucide-react';
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm shadow-lg shadow-primary/10">
+    <header className="absolute top-0 left-0 right-0 z-50 bg-black text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24 border-b border-border/50">
-          <a href="#" className="text-2xl font-bold font-display tracking-wider">HYREXVERSE</a>
+        <div className="flex items-center justify-between h-20">
+          <a href="#" className="text-2xl font-black tracking-tighter">HYREXVERSE</a>
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-            <a href="#info" className="hover:text-primary transition-colors">ABOUT</a>
-            <a href="#info" className="hover:text-primary transition-colors">CONTACT</a>
+            <a href="#about" className="hover:text-primary transition-colors">Benefits</a>
+            <a href="#about" className="hover:text-primary transition-colors">Recent work</a>
+            <a href="#how-it-works" className="hover:text-primary transition-colors">How it works</a>
+            <a href="#" className="hover:text-primary transition-colors">Pricing</a>
+            <a href="#" className="hover:text-primary transition-colors">FAQs</a>
+            <a href="#" className="hover:text-primary transition-colors">Contact</a>
           </nav>
-          <Button variant="secondary" className="rounded-full shadow-md hover:shadow-orange-500/50 animate-pulse-text">
-            GET IN TOUCH
+          <Button variant="outline" className="rounded-md border-neutral-700 bg-black text-white hover:bg-neutral-800 hover:text-white">
+            Log In
           </Button>
         </div>
       </div>
