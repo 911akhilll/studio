@@ -23,7 +23,7 @@ const initialSettings = {
     heroTitle: 'Hyrexverse',
     heroSubtitle: "I'm a YouTube content creator. Join me now!",
     aboutText: "I'm Hyrexverse and I'm a Youtuber and influencer who teaches you how to grow your social media accounts. If you want to learn about my strategy, then join us via Telegram, Instagram, or by subscribing to my YouTube channel. Thank you!",
-    profileImage: 'https://placehold.co/160x160.png',
+    profileImage: 'https://i.ibb.co/HpVtCDGk/profileimg.png',
     contactEmail: '911priyatambehera@gmail.com',
 };
 
