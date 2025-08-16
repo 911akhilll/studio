@@ -186,7 +186,7 @@ const AdminPageComponent = () => {
                                     />
                                     <Button onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="w-full mt-2 bg-secondary text-secondary-foreground hover:bg-secondary/90">
                                         {isUploading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
-                                        Upload New Image
+                                        {isUploading ? 'Uploading...' : 'Upload New Image'}
                                     </Button>
                                 </div>
                             </div>

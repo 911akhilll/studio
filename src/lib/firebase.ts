@@ -1,6 +1,6 @@
 'use client';
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -15,5 +15,17 @@ const firebaseConfig = {
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+
+// Enable offline persistence
+try {
+    enableIndexedDbPersistence(db);
+} catch (err: any) {
+    if (err.code === 'failed-precondition') {
+        console.warn('Firebase persistence failed: Multiple tabs open');
+    } else if (err.code === 'unimplemented') {
+        console.warn('Firebase persistence failed: Browser does not support it.');
+    }
+}
+
 
 export { app, db, storage };
