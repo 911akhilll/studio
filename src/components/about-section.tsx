@@ -32,7 +32,7 @@ const AboutSection = ({ loading, aboutMe }: AboutSectionProps) => {
                     src="https://placehold.co/600x600.png"
                     alt="About me image"
                     fill
-                    className="rounded-2xl object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                    className="rounded-2xl object-cover"
                     data-ai-hint="person coding"
                 />
             </div>

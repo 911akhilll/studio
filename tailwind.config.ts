@@ -17,9 +17,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['"Geist Sans"', 'sans-serif'],
-        headline: ['"Geist Mono"', 'monospace'],
-        code: ['"Geist Mono"', 'monospace'],
+        body: ['Inter', 'sans-serif'],
+        headline: ['"IBM Plex Mono"', 'monospace'],
+        code: ['"IBM Plex Mono"', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',

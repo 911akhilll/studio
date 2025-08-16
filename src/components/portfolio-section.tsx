@@ -50,7 +50,7 @@ const PortfolioSection = () => {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                    className="object-cover"
                     data-ai-hint={project.hint}
                     />
                 </div>
