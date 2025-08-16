@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import StaticImage from './static-image';
 import React, { useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -89,7 +89,7 @@ const Projects = () => {
             >
               <div className={`relative ${index % 2 !== 0 ? 'md:order-2' : ''}`} style={{ transformStyle: 'preserve-3d'}}>
                 <div className="project-card-image">
-                  <Image 
+                  <StaticImage 
                     src={project.image} 
                     alt={project.title} 
                     width={1200} 
