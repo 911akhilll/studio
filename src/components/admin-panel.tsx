@@ -22,13 +22,29 @@ const AdminPanel = () => {
             setPreviewImage(siteData.profileImage);
         }
     }, [siteData, isUploading]);
+    
+    useEffect(() => {
+        // When a new image file is chosen, clear the image URL input
+        if (imageFile) {
+            setFormData(prev => ({ ...prev, profileImage: '' }));
+        }
+    }, [imageFile]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        
+        // If user is typing in the profileImage field, update preview and clear file input
+        if (name === 'profileImage') {
+            setPreviewImage(value);
+            setImageFile(null);
+            if(fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
+        }
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             setImageFile(file);
@@ -46,47 +62,52 @@ const AdminPanel = () => {
 
     return (
         <Dialog open={isAdminPanelOpen} onOpenChange={setAdminPanelOpen}>
-            <DialogContent className="bg-background text-foreground border-border">
+            <DialogContent className="bg-background text-foreground border-border max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Admin Panel</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4">
                     <div>
-                        <label htmlFor="heroTitle">Hero Title</label>
+                        <label htmlFor="heroTitle" className="text-sm font-medium">Hero Title</label>
                         <Input id="heroTitle" name="heroTitle" value={formData.heroTitle} onChange={handleInputChange} />
                     </div>
                     <div>
-                        <label htmlFor="heroSubtitle">Hero Subtitle</label>
+                        <label htmlFor="heroSubtitle" className="text-sm font-medium">Hero Subtitle</label>
                         <Input id="heroSubtitle" name="heroSubtitle" value={formData.heroSubtitle} onChange={handleInputChange} />
                     </div>
                     <div>
-                        <label htmlFor="aboutText">About Text</label>
+                        <label htmlFor="aboutText" className="text-sm font-medium">About Text</label>
                         <Textarea id="aboutText" name="aboutText" value={formData.aboutText} onChange={handleInputChange} rows={5} />
                     </div>
                     <div>
-                        <label>Profile Image</label>
+                        <label className="text-sm font-medium">Profile Image</label>
                         <div className="mt-2 flex items-center gap-4">
-                            <div className="relative">
+                            <div className="relative w-20 h-20">
                                 {previewImage && (
-                                    <Image src={previewImage} alt="Profile preview" width={80} height={80} className="rounded-md object-cover" />
+                                    <Image src={previewImage} alt="Profile preview" layout="fill" className="rounded-md object-cover" />
                                 )}
-                                {isUploading && (
-                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md">
+                                {(isUploading || isSaving) && (
+                                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-md">
                                         <Loader2 className="h-6 w-6 animate-spin text-white" />
                                     </div>
                                 )}
                             </div>
-                             <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
-                                Choose File
+                            <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()}>
+                                Upload File
                             </Button>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleImageChange}
-                                className="hidden"
-                                accept="image/*"
-                            />
                         </div>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleImageFileChange}
+                            className="hidden"
+                            accept="image/*"
+                        />
+                         <div className="mt-4 space-y-2">
+                             <label htmlFor="profileImage" className="text-sm font-medium">Or paste image URL</label>
+                             <p className="text-xs text-muted-foreground">Note: Use direct image links (ending in .png, .jpg, etc.), not Google Drive share links.</p>
+                             <Input id="profileImage" name="profileImage" value={formData.profileImage} onChange={handleInputChange} placeholder="https://example.com/image.png"/>
+                         </div>
                     </div>
                 </div>
                 <DialogFooter>

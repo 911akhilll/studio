@@ -26,17 +26,19 @@ const About = () => {
             </div>
             <div className="order-1 md:order-2">
                 {loading ? (
-                  <Skeleton className="w-[450px] h-[300px] rounded-lg" />
+                  <Skeleton className="w-full h-80 rounded-lg" />
                 ) : (
                   siteData.profileImage && (
-                    <Image 
-                        src={siteData.profileImage}
-                        alt="Domi boy anime"
-                        data-ai-hint="anime boy"
-                        width={450}
-                        height={300}
-                        className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] object-cover"
-                    />
+                    <div className="relative w-full h-80">
+                      <Image 
+                          key={siteData.profileImage} // Add key to force re-render on change
+                          src={siteData.profileImage}
+                          alt="Profile image"
+                          data-ai-hint="profile"
+                          layout="fill"
+                          className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] object-cover"
+                      />
+                    </div>
                   )
                 )}
             </div>
