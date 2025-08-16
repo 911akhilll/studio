@@ -31,13 +31,14 @@ export const useSiteData = () => {
   const [siteData, setSiteData] = useState<SiteData>(initialData);
   const [loading, setLoading] = useState(true);
 
+  // Generic function to fetch a collection's data
   const fetchCollection = useCallback(async (collectionName: string, orderByField: string, orderDirection: 'asc' | 'desc' = 'desc') => {
     const collectionRef = collection(db, 'site', 'settings', collectionName);
     const q = query(collectionRef, orderBy(orderByField, orderDirection));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => {
       const data = doc.data();
-      // Convert Firestore Timestamps to JS Dates
+      // Convert Firestore Timestamps to JS Dates for serialization
       Object.keys(data).forEach(key => {
         if (data[key]?.toDate) {
           data[key] = data[key].toDate();
@@ -47,70 +48,78 @@ export const useSiteData = () => {
     });
   }, []);
 
+  // Effect to subscribe to real-time updates for all site data
   useEffect(() => {
     const docRef = doc(db, 'site', 'settings');
+    
+    // onSnapshot listens for real-time changes to the document
     const unsubscribe = onSnapshot(docRef, async (docSnap) => {
       setLoading(true);
+      
+      // Fetch related collections like reviews and videos
       const reviews = await fetchCollection('reviews', 'createdAt', 'desc') as Review[];
       const videos = await fetchCollection('videos', 'title', 'asc') as YouTubeVideo[];
       
       if (docSnap.exists()) {
         const data = docSnap.data();
+        // Combine the main document data with collection data
         setSiteData({ ...initialData, ...data, reviews, videos });
       } else {
+        // If no data exists, create the initial document
         await setDoc(docRef, initialData);
         setSiteData({ ...initialData, reviews, videos });
       }
       setLoading(false);
     }, (error) => {
         console.error("Error fetching site data:", error);
-        setSiteData(initialData);
+        setSiteData(initialData); // Fallback to initial data on error
         setLoading(false);
     });
 
+    // Cleanup subscription on component unmount
     return () => unsubscribe();
   }, [fetchCollection]);
 
+  // Function to update the main site settings document
   const updateSiteData = async (newData: Partial<Omit<SiteData, 'profileImage' | 'reviews' | 'videos'>>) => {
     const docRef = doc(db, 'site', 'settings');
-    const dataToUpdate = { ...newData };
-    await setDoc(docRef, dataToUpdate, { merge: true });
+    await setDoc(docRef, newData, { merge: true });
   };
 
+  // Generic function to add a document to a sub-collection
   const addDocToCollection = async (collectionName: string, data: object) => {
       const collectionRef = collection(db, 'site', 'settings', collectionName);
       await addDoc(collectionRef, data);
   }
 
+  // Generic function to delete a document from a sub-collection
   const deleteDocFromCollection = async (collectionName: string, docId: string) => {
       const docRef = doc(db, 'site', 'settings', collectionName, docId);
       await deleteDoc(docRef);
   }
-
-  const refreshData = async () => {
-      const reviews = await fetchCollection('reviews', 'createdAt', 'desc') as Review[];
-      const videos = await fetchCollection('videos', 'title', 'asc') as YouTubeVideo[];
-      setSiteData(prev => ({ ...prev, reviews, videos }));
-  }
-
+  
+  // Explicit function to add a review, which persists it to Firebase
   const addReview = async (newReview: Omit<Review, 'id'>) => {
     await addDocToCollection('reviews', newReview);
-    await refreshData();
+    // onSnapshot will automatically update the UI, no manual refresh needed
   };
 
+  // Explicit function to delete a review, which removes it from Firebase
   const deleteReview = async (reviewId: string) => {
     await deleteDocFromCollection('reviews', reviewId);
-    await refreshData();
+    // onSnapshot will automatically update the UI
   }
 
+  // Explicit function to add a video, which persists it to Firebase
   const addVideo = async (newVideo: Omit<YouTubeVideo, 'id'>) => {
     await addDocToCollection('videos', newVideo);
-    await refreshData();
+    // onSnapshot will automatically update the UI
   }
 
+  // Explicit function to delete a video, which removes it from Firebase
   const deleteVideo = async (videoId: string) => {
     await deleteDocFromCollection('videos', videoId);
-    await refreshData();
+    // onSnapshot will automatically update the UI
   }
 
   return { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo };

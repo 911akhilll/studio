@@ -1,6 +1,5 @@
 'use client';
-import React, from 'react';
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useSiteData, Review, YouTubeVideo } from '@/hooks/use-site-data';
 
 export interface SiteData {
@@ -26,10 +25,10 @@ interface SiteDataContextType {
 const SiteDataContext = createContext<SiteDataContextType | undefined>(undefined);
 
 export const SiteDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const { siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo } = useSiteData();
+  const siteDataHook = useSiteData();
 
   return (
-    <SiteDataContext.Provider value={{ siteData, loading, updateSiteData, addReview, deleteReview, addVideo, deleteVideo }}>
+    <SiteDataContext.Provider value={siteDataHook}>
       {children}
     </SiteDataContext.Provider>
   );
