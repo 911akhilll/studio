@@ -12,9 +12,9 @@ const About = () => {
             </div>
             <div className="order-1 md:order-2">
                 <img 
-                    src="/images/profileimg.png"
-                    alt="Hyrexverse avatar"
-                    data-ai-hint="gaming avatar"
+                    src="https://placehold.co/450x300.png"
+                    alt="Domi boy anime"
+                    data-ai-hint="anime boy"
                     width={450}
                     height={300}
                     className="rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)]"
