@@ -46,6 +46,7 @@ export const useSiteData = () => {
           contactEmail: data.contactEmail || initialData.contactEmail,
         }));
       } else {
+        // If the document doesn't exist, create it with initial values
         setDoc(docRef, { 
             heroTitle: initialData.heroTitle,
             heroSubtitle: initialData.heroSubtitle,
