@@ -73,6 +73,10 @@
   body {
     @apply bg-background text-foreground;
     scroll-behavior: smooth;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
 }
 
@@ -125,4 +129,34 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+@keyframes pulse-left {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-10px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-right {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(10px);
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-left {
+  animation: pulse-left 2s ease-in-out infinite;
+}
+
+.animate-pulse-right {
+  animation: pulse-right 2s ease-in-out infinite;
 }

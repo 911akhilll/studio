@@ -3,6 +3,7 @@ import React from 'react';
 import { useSiteDataContext } from '@/contexts/site-data-context';
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 function getYouTubeVideoId(url: string) {
     let videoId = '';
@@ -24,7 +25,12 @@ const YouTubeVideos = () => {
     return (
         <section id="youtube-videos" className="py-24 sm:py-32 bg-secondary text-black">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-center mb-12">See My Latest Videos</h2>
+                <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-center mb-4">See My Latest Videos</h2>
+                <div className="flex justify-center items-center mb-8 scroll-indicator">
+                    <ChevronLeft className="animate-pulse-left" />
+                    <span className="text-sm font-bold tracking-widest uppercase text-black/80">Scroll</span>
+                    <ChevronRight className="animate-pulse-right" />
+                </div>
                 <Carousel
                     opts={{
                         align: "start",
