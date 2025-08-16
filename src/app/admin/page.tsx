@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useSiteDataContext, SiteData } from '@/contexts/site-data-context';
+import { useSiteDataContext, SiteData, SiteDataProvider } from '@/contexts/site-data-context';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -8,7 +8,7 @@ import { Loader2, Star, Home } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
 
-const AdminPage = () => {
+const AdminPageComponent = () => {
     const { siteData, updateSiteData, addReview, loading } = useSiteDataContext();
     const [formData, setFormData] = useState<SiteData>(siteData);
     const [isSaving, setIsSaving] = useState(false);
@@ -181,4 +181,11 @@ const AdminPage = () => {
     );
 };
 
-export default AdminPage;
+
+export default function AdminPage() {
+    return (
+        <SiteDataProvider>
+            <AdminPageComponent />
+        </SiteDataProvider>
+    )
+}
